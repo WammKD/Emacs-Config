@@ -80,7 +80,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "C-M-j")      'indent-new-comment-line)
 (global-set-key (kbd "<C-return>") 'indent-new-comment-line)
 ;; (global-set-key (kbd "<M-return>") 'indent-new-comment-line)
-(global-set-key (kbd "M-[")        'insert-square-brackets)
+(global-set-key (kbd "M-]")        'insert-square-brackets)
 (global-set-key (kbd "M-{")        'insert-curly-braces)
 (global-set-key (kbd "M-\"")       'insert-pair)
 (global-set-key (kbd "C-x M-r")    'revert-buffer-no-confirm)
