@@ -1,1 +1,1 @@
-(lua-mode web-mode)
+(clojure-mode lua-mode web-mode)

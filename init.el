@@ -381,3 +381,18 @@ Leave point after open-paren."
                                (setq lua-indent-level 3
                                      tab-width        3
                                      indent-tabs-mode t)))))
+
+  ;; Bash Shit
+(defun gker-setup-sh-mode ()
+  "My own personal preferences for `sh-mode'.
+
+This is a custom function that sets up the parameters I usually
+prefer for `sh-mode'.  It is automatically added to
+`sh-mode-hook', but is can also be called interactively."
+  (interactive)
+
+  (setq sh-basic-offset  2
+        sh-indentation   2
+        tab-width        2
+        indent-tabs-mode t))
+(add-hook 'sh-mode-hook 'gker-setup-sh-mode)
