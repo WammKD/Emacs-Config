@@ -192,7 +192,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
 
   (let* ((modes '(nil fullboth))
          (cm    (cdr (assoc 'fullscreen (frame-parameters))))
-	 (nl    (if cm 1 -1))
+         (nl    (if cm 1 -1))
          (next  (cadr (member cm modes))))
     (menu-bar-mode nl)
     (tool-bar-mode nl)
@@ -219,7 +219,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
 
   (if (and (buffer-file-name) (not (file-writable-p (buffer-file-name))))
       (let ((buffer-file-name (format "/sudo::%s" buffer-file-name)))
-	ad-do-it)
+        ad-do-it)
     ad-do-it))
 
 (add-to-list 'tramp-connection-properties      (list
@@ -274,7 +274,7 @@ Leave point after open-paren."
   (insert-pair arg "``" "''"))
 (defun my-LaTeX-mode ()
   (add-to-list 'TeX-view-program-list
-	       '("Xreader" "xreader --page-index=%(outpage) %o"))
+               '("Xreader" "xreader --page-index=%(outpage) %o"))
   (setq TeX-view-program-selection '((output-pdf "Xreader"))))
 
 (add-hook 'LaTeX-mode-hook (lambda ()
@@ -406,8 +406,8 @@ prefer for `sh-mode'.  It is automatically added to
   (setq cb (current-buffer))
   (if (not (get-buffer "*ruby*"))
       (progn
-	(inf-ruby)
-	(switch-to-buffer-other-window cb)))
+        (inf-ruby)
+        (switch-to-buffer-other-window cb)))
   (if (use-region-p)
       (ruby-send-region (region-beginning) (region-end))
     (ruby-send-region (line-beginning-position) (line-end-position))))
@@ -422,3 +422,63 @@ prefer for `sh-mode'.  It is automatically added to
                                 (setq ruby-indent-level 2
                                       tab-width         2
                                       indent-tabs-mode  t)))
+
+  ;; Rust Shit
+(require 'rusti)
+
+(defun rust-new (exec? name)
+  (interactive (list
+                 (y-or-n-p    "Executable: ")
+                 (read-string "Project name: ")))
+
+  (delete-other-windows)
+
+  (let ((height (window-height)))
+    (cargo-process-new name exec?)
+
+    (enlarge-window (- height (round (* height .7)))))
+  (sleep-for 0 500)
+  (find-file (concat default-directory name "/src/main.rs"))
+  (tabify (point-min) (point-max))
+  (save-buffer))
+(global-set-key (kbd "C-x r n") #'rust-new)
+
+(setq racer-cmd           "~/.cargo/bin/racer")
+(setq racer-rust-src-path "~/.cargo/rust/src")
+
+(add-hook 'rust-mode-hook     'cargo-minor-mode)
+(add-hook 'rust-mode-hook     #'racer-mode)
+(add-hook 'rust-mode-hook     #'eldoc-mode)
+(add-hook 'rust-mode-hook     #'company-mode)
+(add-hook 'rust-mode-hook     (lambda ()
+                                (defun run-command (command)
+                                  (delete-other-windows)
+                                  (let ((height (window-height)))
+                                    (funcall command)
+                                    (enlarge-window
+                                      (- height (round (* height .7))))))
+
+                                (defun rustCompile ()
+                                  (interactive)
+
+                                  (run-command 'rust-compile))
+                                (defun rustRun ()
+                                  (interactive)
+
+                                  (let ((name (buffer-name)))
+                                    (run-command
+                                      (lambda ()
+                                        (async-shell-command
+                                          (substring
+                                            name
+                                            0
+                                            (- (length name) 3)))))))
+
+                                (local-set-key (kbd "C-x r d") #'racer-describe)
+                                (local-set-key (kbd "C-x r c") #'rustCompile)
+                                (local-set-key (kbd "C-x r r") #'cargo-process-run)
+
+                                (setq c-basic-offset   4
+                                      tab-width        4
+                                      indent-tabs-mode t)))
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
