@@ -281,3 +281,24 @@ Leave point after open-paren."
 (add-hook 'LaTeX-mode-hook (lambda ()
                              (local-set-key (kbd "M-\"") #'LaTeX-insert-pair)))
 (add-hook 'LaTeX-mode-hook 'my-LaTeX-mode)
+
+    ;; Word Shit
+(autoload 'no-word "no-word" "word to txt")
+(add-to-list 'auto-mode-alist '("\\.doc\\'" . no-word))
+
+  ;; QML Shit
+; I'm putting this here in event that I add a QML mode, again
+;; (autoload 'qml-mode "qml-mode")
+;; (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
+;; (defun qml-mode-setup-folding ()
+;;   (local-set-key (kbd "C-x w f") 'hs-hide-block)
+;;   (local-set-key (kbd "C-x w s") 'hs-show-block)
+;;   (local-set-key (kbd "C-x w i") 'qml-add-import)
+;;   (local-set-key (kbd "C-M-SPC") 'qml-mark-defun)
+
+;;   (setq-local js-indent-level 2)
+;;   (setq-local css-indent-offset 2))
+;; (add-hook 'qml-mode-hook 'qml-mode-setup-folding)
+
+  ;; Web Shit
+
