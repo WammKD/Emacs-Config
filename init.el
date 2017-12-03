@@ -43,6 +43,7 @@
 ;;   (package-list-packages))
 
 ;; Emacs Shit
+(load-file "~/.emacs.d/lisp/cursors.el")
 (delete-selection-mode t)
 (add-hook 'emacs-lisp-mode-hook (lambda ()
                                   (setq indent-tabs-mode nil)))
