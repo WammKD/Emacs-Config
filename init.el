@@ -43,6 +43,7 @@
 ;;   (package-list-packages))
 
 ;; Emacs Shit
+(delete-selection-mode t)
 (add-hook 'emacs-lisp-mode-hook (lambda ()
                                   (setq indent-tabs-mode nil)))
 
@@ -94,6 +95,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
 ; Turn on iswitchb to change buffers with [C-x b]
 (iswitchb-mode t)
 
+(global-set-key (kbd "C-x C-b") 'iswitchb-buffer)
 (setq iswitchb-buffer-ignore (append
                                '("\\*Completions\\*" "\\*Messages\\*"
                                  "\\*epc con"        "\\*Minibuf-"
@@ -120,6 +122,23 @@ If there is a fill prefix, delete it from the beginning of the following line."
 
 (add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
 (add-hook                'ido-setup-hook      'ido-local-keys)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Custom screen splitting functions ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun vsplit-last-buffer ()
+  (interactive)
+  (split-window-vertically)
+  (other-window 1 nil)
+  (switch-to-next-buffer))
+(defun hsplit-last-buffer ()
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1 nil)
+  (switch-to-next-buffer))
+
+(global-set-key (kbd "C-x 2") 'vsplit-last-buffer)
+(global-set-key (kbd "C-x 3") 'hsplit-last-buffer)
 
   ;; Display Shit
 (defun switch-fullscreen nil
@@ -160,3 +179,14 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "C-M-r") 'run-scheme)
 (add-hook 'scheme-mode-hook (lambda ()
                               (setq indent-tabs-mode nil)))
+
+  ;; Text Shit
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'text-mode-hook 'visual-line-mode)
+(defun my-scratch-flyspell-mode ()
+  (interactive)
+  (with-current-buffer "*scratch*"
+    (flyspell-mode 1)))
+(add-hook 'after-init-hook 'my-scratch-flyspell-mode)
+
+(global-set-key [f7] 'ispell)
