@@ -239,12 +239,14 @@ If there is a fill prefix, delete it from the beginning of the following line."
 ;; Coding Shit?
 (require 'smart-tabs-mode)
 
-(smart-tabs-add-language-support lua lua-mode-hook
+(smart-tabs-add-language-support lua    lua-mode-hook
   ((lua-indent-line . lua-indent-level)))
 (smart-tabs-add-language-support ceylon ceylon-mode-hook
   ((ceylon-indent-line   . tab-width)
    (ceylon-format-region . tab-width)))
-(smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon ;; 'lua
+(smart-tabs-add-language-support scala  scala-mode-hook
+  ((scala-indent:indent-line . scala-indent:step)))
+(smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon 'scala ;; 'lua
                       )
 
   ;; Scheme Shit
@@ -506,3 +508,14 @@ prefer for `sh-mode'.  It is automatically added to
     ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api-javaslang")
     ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api-commonsCodec")
     ))
+(global-set-key (kbd "C-h j") 'javadoc-lookup)
+(add-hook 'java-mode-hook '(lambda ()
+                             (define-key java-mode-map (kbd "C-x j i")
+                               'add-java-import)))
+
+    ;; Scala Shit
+(add-hook 'scala-mode-hook
+  (lambda ()
+    (setq scala-indent:step 4
+          tab-width         4
+          indent-tabs-mode  t)))
