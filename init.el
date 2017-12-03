@@ -90,6 +90,37 @@ If there is a fill prefix, delete it from the beginning of the following line."
   ;; Eshell Shit
 (setq shell-file-name    "bash")
 
+  ;; Buffers Shit
+; Turn on iswitchb to change buffers with [C-x b]
+(iswitchb-mode t)
+
+(setq iswitchb-buffer-ignore (append
+                               '("\\*Completions\\*" "\\*Messages\\*"
+                                 "\\*epc con"        "\\*Minibuf-"
+                                 "*epc:server:"      "\\*code-conversion-work\\*"
+                                 "\\*Echo Area"      "\\*VC-Git\\* tmp status-"   "\\*vc\\*")
+                               iswitchb-buffer-ignore))
+; Allow keys to work like dzen because I'm lazy
+(defun iswitchb-local-keys ()
+  (mapc
+    (lambda (K)
+      (let* ((key (car K)) (fun (cdr K)))
+        (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
+    '(("<right>" . iswitchb-next-match) ("<left>"  . iswitchb-prev-match)
+      ("<next>"  . iswitchb-next-match) ("<prior>" . iswitchb-prev-match)
+      ("<up>"    . ignore)              ("<down>"  . ignore))))
+(defun ido-local-keys ()
+  (mapc
+    (lambda (K)
+      (let* ((key (car K)) (fun (cdr K)))
+        (define-key ido-completion-map (edmacro-parse-keys key) fun)))
+    '(("<right>" . ido-next-match) ("<left>"  . ido-prev-match)
+      ("<next>"  . ido-next-match) ("<prior>" . ido-prev-match)
+      ("<up>"    . ignore)         ("<down>"  . ignore))))
+
+(add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
+(add-hook                'ido-setup-hook      'ido-local-keys)
+
   ;; Display Shit
 (defun switch-fullscreen nil
   (interactive)
