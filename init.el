@@ -433,6 +433,7 @@ prefer for `sh-mode'.  It is automatically added to
 
   ;; Rust Shit
 (require 'rusti)
+(setq rusti-program "~/.cargo/bin/rust-repl")
 
 (defun rust-new (exec? name)
   (interactive (list
@@ -622,3 +623,64 @@ prefer for `sh-mode'.  It is automatically added to
 				'ceylon-run-module-manual)))
 
     ;; Android Shit
+(setq android-mode-builder (quote gradle)
+      android-mode-sdk-dir "~/Android/Sdk")
+(defun android-global-create-project ()
+  (interactive)
+
+  (android-mode t)
+  (call-interactively 'android-create-project))
+(global-set-key (kbd "C-x a C-f") 'android-global-create-project)
+(global-set-key (kbd "C-x a o s") 'android-logcat)
+
+(eval-after-load 'android-mode
+  (lambda ()
+    (add-hook 'android-mode-hook (lambda ()
+                                   (setq compile-command "gradle compileDebugAidl")
+
+                                   (defun android-compile-project ()
+                                     (interactive)
+
+                                     (save-some-buffers)
+                                     (shell-command (concat
+                                                      compile-command
+                                                      " "
+                                                      (if (= (string-match "gradle_*" compile-command) 0)
+                                                          "-p "
+                                                        "")
+                                                      (android-root)
+                                                      " &") "*compilation*"))
+                                   (defun android-gradle-build-apk ()
+                                     (interactive)
+
+                                     (save-some-buffers)
+                                     (shell-command (concat
+                                                      "gradle compileDebugAidl assembleRelease -p "
+                                                      (android-root)
+                                                      " &") "*compilation*"))
+                                   (defun android-start-genymotion-emulator (device_name)
+                                     (interactive "sAndroid Virtual Device Name: ")
+
+                                     (if (executable-find "player")
+                                         (call-process-shell-command
+                                           (concat (executable-find "player") " --vm-name " device_name " &")
+                                           nil
+                                           0)
+                                       (message
+                                         "Genymotion or the corresponding command \"player\" is either not "
+                                         "installed or not within your PATH.")))
+
+                                   (local-set-key (kbd "C-x a c")     'android-compile-project)
+                                   (local-set-key (kbd "C-x a b")     'android-gradle-build-apk)
+                                                     ;; C-c a g
+                                   (local-set-key (kbd "C-x a m")     'android-start-genymotion-emulator)
+                                   (local-set-key (kbd "C-x a o f s") 'android-logcat-set-filter)
+                                   (local-set-key (kbd "C-x a o f c") 'android-logcat-clear-filter)))))
+
+(add-hook 'gud-mode-hook (lambda ()
+                           (add-to-list
+                             'gud-jdb-classpath
+                             "~/Android/Sdk/platforms/android-24/android.jar")
+                           (add-to-list
+                             'gud-jdb-classpath
+                             "~/Android/Sdk/platforms/android-26/android.jar")))
