@@ -90,6 +90,42 @@ If there is a fill prefix, delete it from the beginning of the following line."
 
 (setq column-number-mode t)
 
+  ;; Clipboard Shit
+(defun copy-to-clipboard ()
+  (interactive)
+  (if (display-graphic-p)
+      (progn
+        (message "Yanked region to x-clipboard!")
+        (call-interactively 'clipboard-kill-ring-save))
+    (if (region-active-p)
+        (progn
+          ;; (shell-command-on-region (region-beginning) (region-end) "gpaste add ")
+          (shell-command (concat
+                           "gpaste-client add \""
+                           (replace-regexp-in-string
+                             "`"
+                             "\\\\`"
+                             (replace-regexp-in-string
+                               "\""
+                               "\\\\\""
+                               (buffer-substring-no-properties
+                                 (region-beginning)
+                                 (region-end))))
+                           "\""))
+          (message "Yanked region to clipboard!")
+          (deactivate-mark))
+      (message "No region active; can't yank to clipboard!"))))
+(defun paste-from-clipboard ()
+  (interactive)
+  (if (display-graphic-p)
+      (progn
+        (clipboard-yank)
+        (message "graphics active"))
+    (insert (shell-command-to-string "gpaste-client get 0"))))
+
+(global-set-key [?\C-c ?c] 'copy-to-clipboard)
+(global-set-key [?\C-c ?v] 'paste-from-clipboard)
+
   ;; Eshell Shit
 (setq shell-file-name    "bash")
 
