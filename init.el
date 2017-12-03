@@ -2,9 +2,6 @@
 (add-to-list 'load-path              "~/.emacs.d/lisp")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-;; Emacs Shit
-(setq column-number-mode t)
-
 ;; Packages
 (require 'package)
 
@@ -32,18 +29,21 @@
   (unless (package-installed-p package)
     (unless (assoc package package-archive-contents)
       (package-refresh-contents))
-    (package-install package)))
-(mapc
-  'require-package
-  (car (read-from-string (with-temp-buffer
-                           (insert-file-contents packagesList)
-                           (buffer-string)))))
 
-;; (package-initialize)
+    (package-install package)))
+(with-eval-after-load "package.el"
+  (mapc
+    'require-package
+    (car (read-from-string (with-temp-buffer
+                             (insert-file-contents packagesList)
+                             (buffer-string))))))
 
 ;; (defun package-list-updated-packages ()
 ;;   (package-refresh-contents)
 ;;   (package-list-packages))
+
+;; Emacs Shit
+(setq column-number-mode t)
 
 ;; Eshell Shit
 (setq shell-file-name    "bash")
@@ -53,5 +53,4 @@
   (when (display-graphic-p (selected-frame))
     (load-theme 'klere2 t)))
 (add-hook 'window-setup-hook 'on-after-init)
-
 
