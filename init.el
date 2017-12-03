@@ -46,10 +46,31 @@
 (add-hook 'emacs-lisp-mode-hook (lambda ()
                                   (setq indent-tabs-mode nil)))
 
+(defun chomp (str)
+  "Chomp leading and tailing whitespace from STR."
+  (replace-regexp-in-string "\\(^[[:space:]\\n]*\\|[[:space:]\\n]*$\\)" "" str))
+  ;; Wrap highlighted text in pair
+(defun insert-square-brackets (&optional arg)
+  "Enclose following ARG sexps in square brackets.
+Leave point after open-paren."
+  (interactive "*P")
+  (insert-pair arg ?\[ ?\]))
+(defun insert-curly-braces (&optional arg)
+  "Enclose following ARG sexps in curly braces.
+Leave point after open-paren."
+  (interactive "*P")
+  (insert-pair arg ?\{ ?\}))
 (defun join-next-line ()
-  "Join this line to following and fix up whitespace at join.\nIf there is a fill prefix, delete it from the beginning of the following line."
+  "Join this line to following and fix up whitespace at join.
+If there is a fill prefix, delete it from the beginning of the following line."
   (interactive)
   (join-line -1))
+(defun revert-buffer-no-confirm ()
+  "Revert buffer without confirmation."
+  (interactive)
+  (message "Buffer reverting")
+  (revert-buffer t t)
+  (message "Buffer reverted"))
 
 (global-set-key (kbd "M-n")        'next-line)
 (global-set-key (kbd "M-p")        'previous-line)
@@ -59,11 +80,32 @@
 (global-set-key (kbd "C-M-j")      'indent-new-comment-line)
 (global-set-key (kbd "<C-return>") 'indent-new-comment-line)
 ;; (global-set-key (kbd "<M-return>") 'indent-new-comment-line)
+(global-set-key (kbd "M-[")        'insert-square-brackets)
+(global-set-key (kbd "M-{")        'insert-curly-braces)
+(global-set-key (kbd "M-\"")       'insert-pair)
+(global-set-key (kbd "C-x M-r")    'revert-buffer-no-confirm)
 
 (setq column-number-mode t)
 
-;; Eshell Shit
+  ;; Eshell Shit
 (setq shell-file-name    "bash")
+
+  ;; Display Shit
+(defun switch-fullscreen nil
+  (interactive)
+  (let* ((modes '(nil fullboth))
+         (cm    (cdr (assoc 'fullscreen (frame-parameters))))
+	 (nl    (if cm
+		    1
+		  -1))
+         (next  (cadr (member cm modes))))
+    (menu-bar-mode nl)
+    (tool-bar-mode nl)
+    (modify-frame-parameters
+      (selected-frame)
+      (list (cons 'fullscreen next)))))
+
+(define-key global-map [f11] 'switch-fullscreen)
 
 ;; Theme Shit
 (defun on-after-init ()
