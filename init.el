@@ -482,3 +482,21 @@ prefer for `sh-mode'.  It is automatically added to
                                       tab-width        4
                                       indent-tabs-mode t)))
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
+  ;; C/C++/Java Shit
+(setq-default c-basic-offset 4)
+(add-hook 'c-initialization-hook (lambda ()
+                                   (setq c-basic-offset   4
+                                         tab-width        4
+                                         indent-tabs-mode t)))
+
+  ;; JVM Shit
+    ;; Java Shit
+(eval-after-load 'javadoc-lookup
+  (lambda ()
+    (javadoc-add-roots "/usr/lib/jvm/java-8-openjdk-amd64/docs/api/")
+    ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api")
+    ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api-junit")
+    ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api-javaslang")
+    ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api-commonsCodec")
+    ))
