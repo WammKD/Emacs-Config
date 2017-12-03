@@ -56,20 +56,24 @@
   "Enclose following ARG sexps in square brackets.
 Leave point after open-paren."
   (interactive "*P")
+
   (insert-pair arg ?\[ ?\]))
 (defun insert-curly-braces (&optional arg)
   "Enclose following ARG sexps in curly braces.
 Leave point after open-paren."
   (interactive "*P")
+
   (insert-pair arg ?\{ ?\}))
 (defun join-next-line ()
   "Join this line to following and fix up whitespace at join.
 If there is a fill prefix, delete it from the beginning of the following line."
   (interactive)
+
   (join-line -1))
 (defun revert-buffer-no-confirm ()
   "Revert buffer without confirmation."
   (interactive)
+
   (message "Buffer reverting")
   (revert-buffer t t)
   (message "Buffer reverted"))
@@ -93,6 +97,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
   ;; Clipboard Shit
 (defun copy-to-clipboard ()
   (interactive)
+
   (if (display-graphic-p)
       (progn
         (message "Yanked region to x-clipboard!")
@@ -117,6 +122,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
       (message "No region active; can't yank to clipboard!"))))
 (defun paste-from-clipboard ()
   (interactive)
+
   (if (display-graphic-p)
       (progn
         (clipboard-yank)
@@ -166,11 +172,13 @@ If there is a fill prefix, delete it from the beginning of the following line."
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun vsplit-last-buffer ()
   (interactive)
+
   (split-window-vertically)
   (other-window 1 nil)
   (switch-to-next-buffer))
 (defun hsplit-last-buffer ()
   (interactive)
+
   (split-window-horizontally)
   (other-window 1 nil)
   (switch-to-next-buffer))
@@ -181,6 +189,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
   ;; Display Shit
 (defun switch-fullscreen nil
   (interactive)
+
   (let* ((modes '(nil fullboth))
          (cm    (cdr (assoc 'fullscreen (frame-parameters))))
 	 (nl    (if cm
@@ -201,6 +210,28 @@ If there is a fill prefix, delete it from the beginning of the following line."
     (load-theme 'klere2 t)))
 (add-hook 'window-setup-hook 'on-after-init)
 
+;; Tramp Shit
+(require 'tramp)
+
+(setq tramp-default-method "scp")
+(setq recentf-auto-cleanup 'never)
+(defadvice save-buffer (around save-buffer-as-root-around activate)
+  "Use sudo to save the current buffer."
+  (interactive "p")
+
+  (if (and (buffer-file-name) (not (file-writable-p (buffer-file-name))))
+      (let ((buffer-file-name (format "/sudo::%s" buffer-file-name)))
+	ad-do-it)
+    ad-do-it))
+
+(add-to-list 'tramp-connection-properties      (list
+                                                 (regexp-quote "192.168.1.109")
+                                                 "remote-shell"
+                                                 "sh"))
+;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+(add-to-list 'tramp-remote-path                "/system/xbin")
+(add-to-list 'tramp-remote-process-environment "TMPDIR=$HOME")
+
 ;; Coding Shit?
 (with-eval-after-load "smart-tabs-mode.el"
   (smart-tabs-add-language-support lua lua-mode-hook
@@ -219,10 +250,13 @@ If there is a fill prefix, delete it from the beginning of the following line."
                               (setq indent-tabs-mode nil)))
 
   ;; Text Shit
+(require 'text-reading-mode)
+
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 (defun my-scratch-flyspell-mode ()
   (interactive)
+
   (with-current-buffer "*scratch*"
     (flyspell-mode 1)))
 (add-hook 'after-init-hook 'my-scratch-flyspell-mode)
