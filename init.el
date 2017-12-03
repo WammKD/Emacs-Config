@@ -260,3 +260,24 @@ If there is a fill prefix, delete it from the beginning of the following line."
   (with-current-buffer "*scratch*"
     (flyspell-mode 1)))
 (add-hook 'after-init-hook 'my-scratch-flyspell-mode)
+
+    ;; LaTeX Shit
+(setq TeX-auto-save  t)
+(setq TeX-parse-self t)
+(setq TeX-save-query nil)
+(setq TeX-PDF-mode   t)
+
+(defun LaTeX-insert-pair (&optional arg)
+  "Enclose following ARG sexps in LaTeX quotations (`` and '').
+Leave point after open-paren."
+  (interactive "*P")
+
+  (insert-pair arg "``" "''"))
+(defun my-LaTeX-mode ()
+  (add-to-list 'TeX-view-program-list
+	       '("Xreader" "xreader --page-index=%(outpage) %o"))
+  (setq TeX-view-program-selection '((output-pdf "Xreader"))))
+
+(add-hook 'LaTeX-mode-hook (lambda ()
+                             (local-set-key (kbd "M-\"") #'LaTeX-insert-pair)))
+(add-hook 'LaTeX-mode-hook 'my-LaTeX-mode)
