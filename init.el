@@ -77,6 +77,11 @@ If there is a fill prefix, delete it from the beginning of the following line."
   (message "Buffer reverting")
   (revert-buffer t t)
   (message "Buffer reverted"))
+(defun browse-url-qutebrowser (url &optional new-window)
+  "Open URL in Qutebrowser"
+  (interactive (browse-url-interactive-arg "URL: "))
+
+  (start-process (concat "qutebrowser " url) nil "qutebrowser" url))
 
 (global-set-key (kbd "M-n")        'next-line)
 (global-set-key (kbd "M-p")        'previous-line)
@@ -92,7 +97,8 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "C-x M-r")    'revert-buffer-no-confirm)
 (global-set-key [f7]               'ispell)
 
-(setq column-number-mode t)
+(setq browse-url-browser-function 'browse-url-qutebrowser)
+(setq column-number-mode          t)
 
   ;; Clipboard Shit
 (defun copy-to-clipboard ()
@@ -133,7 +139,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key [?\C-c ?v] 'paste-from-clipboard)
 
   ;; Eshell Shit
-(setq shell-file-name    "bash")
+(setq shell-file-name "bash")
 
   ;; Buffers Shit
 ; Turn on iswitchb to change buffers with [C-x b]
