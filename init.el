@@ -233,14 +233,15 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (add-to-list 'tramp-remote-process-environment "TMPDIR=$HOME")
 
 ;; Coding Shit?
-(with-eval-after-load "smart-tabs-mode.el"
-  (smart-tabs-add-language-support lua lua-mode-hook
-    ((lua-indent-line . lua-indent-level)))
-  (smart-tabs-add-language-support ceylon ceylon-mode-hook
-    ((ceylon-indent-line   . tab-width)
-     (ceylon-format-region . tab-width)))
-  (smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon ;; 'lua
-                        ))
+(eval-after-load 'smart-tabs-mode
+  (lambda ()
+    (smart-tabs-add-language-support lua lua-mode-hook
+      ((lua-indent-line . lua-indent-level)))
+    (smart-tabs-add-language-support ceylon ceylon-mode-hook
+      ((ceylon-indent-line   . tab-width)
+       (ceylon-format-region . tab-width)))
+    (smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon ;; 'lua
+                          )))
 
   ;; Scheme Shit
 (put 'if 'scheme-indent-function 2)
@@ -301,3 +302,68 @@ Leave point after open-paren."
 ;; (add-hook 'qml-mode-hook 'qml-mode-setup-folding)
 
   ;; Web Shit
+(add-to-list 'auto-mode-alist '("\\.js\\'"        . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'"       . web-mode))
+(add-to-list 'auto-mode-alist '("\\.php\\'"       . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'"   . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'"       . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'"  . web-mode))
+(add-to-list 'auto-mode-alist '("\\.xml?\\'"      . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'"     . web-mode))
+(add-to-list 'auto-mode-alist '("\\.phtml\\'"     . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'"    . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'"       . web-mode))
+(add-to-list 'auto-mode-alist '("\\.scss\\'"      . web-mode))
+
+(eval-after-load 'web-mode
+  (lambda ()
+    ;; (setq web-mode-indent-style 2)
+
+    (set-face-attribute 'web-mode-html-tag-face nil         :foreground "blue3"   :weight 'bold)
+    (set-face-attribute 'web-mode-doctype-face nil          :foreground "#9FE55B" :weight 'bold)
+    (set-face-attribute 'web-mode-html-attr-name-face nil   :foreground "purple3")
+    (set-face-attribute 'web-mode-css-function-face nil     :foreground "purple3" :weight 'normal)
+    (set-face-attribute 'web-mode-css-pseudo-class-face nil :foreground "cyan3"   :weight 'normal)
+
+    (defun web-mode-setup-folding ()
+      (let ((ext (file-name-extension (buffer-name))))
+        (cond
+         ((or
+            (string-equal ext "css")
+            (string-equal ext "php")) (setq-local comment-start "/* ")
+                                      (setq-local comment-end   " */"))
+         ((string-equal ext  "js")    (setq-local comment-start "// ")
+                                      (setq-local comment-end   ""))
+         ((or
+            (string-equal ext "html")
+            (string-equal ext "xml")) (setq-local comment-start "<!-- ")
+                                      (setq-local comment-end   " -->"))))
+      (hs-minor-mode t)
+
+      (defun unnec1 ()
+        (interactive)
+
+        (ignore-errors (web-mode-fold-or-unfold))
+        (hs-hide-block))
+      (defun unnec2 ()
+        (interactive)
+
+        (ignore-errors (web-mode-fold-or-unfold))
+        (hs-show-block))
+
+      (local-set-key (kbd "C-x w f") 'unnec1)
+      (local-set-key (kbd "C-x w s") 'unnec2))
+    (add-hook 'web-mode-hook 'web-mode-setup-folding)
+
+    (add-hook 'web-mode-hook
+              (lambda ()
+                (setq web-mode-enable-auto-closing  t
+                      web-mode-style-padding        2
+                      web-mode-markup-indent-offset 2
+                      ;; web-mode-attr-indent-offset   2  ; Html attribute indentation level
+                      web-mode-code-indent-offset   2
+                      web-mode-css-indent-offset    2
+                      ;; web-mode-sql-indent-offset    2  ; Sql (inside strings) indentation level
+                      tab-width                     2
+                      indent-tabs-mode              t)))))
