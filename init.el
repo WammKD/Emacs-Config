@@ -192,9 +192,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
 
   (let* ((modes '(nil fullboth))
          (cm    (cdr (assoc 'fullscreen (frame-parameters))))
-	 (nl    (if cm
-		    1
-		  -1))
+	 (nl    (if cm 1 -1))
          (next  (cadr (member cm modes))))
     (menu-bar-mode nl)
     (tool-bar-mode nl)
@@ -235,13 +233,13 @@ If there is a fill prefix, delete it from the beginning of the following line."
 ;; Coding Shit?
 (require 'smart-tabs-mode)
 
-    (smart-tabs-add-language-support lua lua-mode-hook
-      ((lua-indent-line . lua-indent-level)))
-    (smart-tabs-add-language-support ceylon ceylon-mode-hook
-      ((ceylon-indent-line   . tab-width)
-       (ceylon-format-region . tab-width)))
-    (smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon ;; 'lua
-                          )
+(smart-tabs-add-language-support lua lua-mode-hook
+  ((lua-indent-line . lua-indent-level)))
+(smart-tabs-add-language-support ceylon ceylon-mode-hook
+  ((ceylon-indent-line   . tab-width)
+   (ceylon-format-region . tab-width)))
+(smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon ;; 'lua
+                      )
 
   ;; Scheme Shit
 (put 'if 'scheme-indent-function 2)
@@ -369,8 +367,17 @@ Leave point after open-paren."
                       indent-tabs-mode              t)))))
 
   ;; Python Shit
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    (setq python-indent-level 4
-		  tab-width           4
-		  indent-tabs-mode    t)))
+(add-hook 'python-mode-hook (lambda ()
+                              (setq python-indent-level 4
+                                    tab-width           4
+                                    indent-tabs-mode    t)))
+
+  ;; Lua Shit
+(add-to-list        'auto-mode-alist '("\\.lua$" . lua-mode))
+(add-to-list 'interpreter-mode-alist '("lua"     . lua-mode))
+(eval-after-load 'lua-mode
+  (lambda ()
+    (add-hook 'lua-mode-hook (lambda ()
+                               (setq lua-indent-level 3
+                                     tab-width        3
+                                     indent-tabs-mode t)))))
