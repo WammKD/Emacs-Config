@@ -233,15 +233,15 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (add-to-list 'tramp-remote-process-environment "TMPDIR=$HOME")
 
 ;; Coding Shit?
-(eval-after-load 'smart-tabs-mode
-  (lambda ()
+(require 'smart-tabs-mode)
+
     (smart-tabs-add-language-support lua lua-mode-hook
       ((lua-indent-line . lua-indent-level)))
     (smart-tabs-add-language-support ceylon ceylon-mode-hook
       ((ceylon-indent-line   . tab-width)
        (ceylon-format-region . tab-width)))
     (smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon ;; 'lua
-                          )))
+                          )
 
   ;; Scheme Shit
 (put 'if 'scheme-indent-function 2)
@@ -367,3 +367,10 @@ Leave point after open-paren."
                       ;; web-mode-sql-indent-offset    2  ; Sql (inside strings) indentation level
                       tab-width                     2
                       indent-tabs-mode              t)))))
+
+  ;; Python Shit
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (setq python-indent-level 4
+		  tab-width           4
+		  indent-tabs-mode    t)))

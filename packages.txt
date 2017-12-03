@@ -1,1 +1,1 @@
-(smart-tabs-mode web-mode)
+(web-mode)
