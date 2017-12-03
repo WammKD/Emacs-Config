@@ -54,3 +54,12 @@
     (load-theme 'klere2 t)))
 (add-hook 'window-setup-hook 'on-after-init)
 
+;; Coding Shit?
+(with-eval-after-load "smart-tabs-mode.el"
+  (smart-tabs-add-language-support lua lua-mode-hook
+    ((lua-indent-line . lua-indent-level)))
+  (smart-tabs-add-language-support ceylon ceylon-mode-hook
+    ((ceylon-indent-line   . tab-width)
+     (ceylon-format-region . tab-width)))
+  (smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon ;; 'lua
+			))
