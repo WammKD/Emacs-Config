@@ -567,28 +567,18 @@ prefer for `sh-mode'.  It is automatically added to
 (defun    ceylon-run-manual          (funct-or-class module)
   (interactive (list
 		 (read-from-minibuffer
-		   "Function or class name to run: "
-		   nil
-		   nil
-		   nil
-		   nil
-		   (file-name-base))
+		   "Function or class name to run: " nil nil
+                   nil                               nil (file-name-base))
 		 (read-from-minibuffer
-		   "Module to use: "
-		   nil
-		   nil
-		   nil
-		   nil
-		   "default")))
+		   "Module to use: "                 nil nil
+                   nil                               nil "default")))
 
   (let* ((source                  "source")
 	 (get-directory-file-name (lambda (dir)
 				    (directory-file-name (file-name-directory
 							   dir))))
 	 (file-name               (buffer-file-name))
-	 (curr-dir                (funcall
-				    get-directory-file-name
-				    file-name)))
+	 (curr-dir                (funcall get-directory-file-name file-name)))
     (while (not (string-equal (file-name-nondirectory curr-dir) source))
       (setq curr-dir (funcall get-directory-file-name curr-dir)))
 
@@ -630,3 +620,5 @@ prefer for `sh-mode'.  It is automatically added to
 (add-hook 'ceylon-mode-hook (lambda ()
 			      (define-key ceylon-mode-map (kbd "C-x c m")
 				'ceylon-run-module-manual)))
+
+    ;; Android Shit
