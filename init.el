@@ -519,3 +519,114 @@ prefer for `sh-mode'.  It is automatically added to
     (setq scala-indent:step 4
           tab-width         4
           indent-tabs-mode  t)))
+
+    ;; Ceylon Shit
+(defconst ceylon-compileRun-buffer   "*Ceylon Program*"
+  "The name of the buffer where output from compiling or running a Ceylon file goes.")
+(setq     same-window-buffer-names   (cons
+				       ceylon-compileRun-buffer
+				       same-window-buffer-names))
+(defun    ceylon-helper~buffer-size  ()
+  (floor (* .75 (window-height))))
+(defun    ceylon-startCompile-manual (command win-height buffer error-message)
+  (if (get-buffer-process buffer)
+      (progn
+	(message error-message)
+	(get-buffer-process buffer))
+    (progn
+      (setq buff-win (get-buffer-window buffer))
+      (setq orig-sts (not (equal buff-win (get-buffer-window))))
+
+      (when (not buff-win)
+	(split-window-vertically win-height))
+
+      (when orig-sts (other-window 1))
+      (async-shell-command command buffer)
+      (when orig-sts (other-window -1))
+
+      (get-buffer-process buffer))))
+(defun    ceylon-compile-manual      ()
+  (interactive)
+
+  (let* ((source                  "source")
+	 (get-directory-file-name (lambda (dir)
+				    (directory-file-name (file-name-directory
+							   dir))))
+	 (file-name               (buffer-file-name))
+	 (curr-dir                (funcall
+				    get-directory-file-name
+				    file-name)))
+    (while (not (string-equal (file-name-nondirectory curr-dir) source))
+      (setq curr-dir (funcall get-directory-file-name curr-dir)))
+
+    (ceylon-startCompile-manual
+      (concat "cd " curr-dir "/../; ceylon compile " file-name)
+      (ceylon-helper~buffer-size)
+      ceylon-compileRun-buffer
+      "A Ceylon process is currently running!")))
+(defun    ceylon-run-manual          (funct-or-class module)
+  (interactive (list
+		 (read-from-minibuffer
+		   "Function or class name to run: "
+		   nil
+		   nil
+		   nil
+		   nil
+		   (file-name-base))
+		 (read-from-minibuffer
+		   "Module to use: "
+		   nil
+		   nil
+		   nil
+		   nil
+		   "default")))
+
+  (let* ((source                  "source")
+	 (get-directory-file-name (lambda (dir)
+				    (directory-file-name (file-name-directory
+							   dir))))
+	 (file-name               (buffer-file-name))
+	 (curr-dir                (funcall
+				    get-directory-file-name
+				    file-name)))
+    (while (not (string-equal (file-name-nondirectory curr-dir) source))
+      (setq curr-dir (funcall get-directory-file-name curr-dir)))
+
+    (ceylon-startCompile-manual
+      (concat "cd " curr-dir "/../; ceylon run --run " funct-or-class " " module)
+      (ceylon-helper~buffer-size)
+      ceylon-compileRun-buffer
+      "A Ceylon process is currently running!")))
+(defun    ceylon-run-module-manual   (module)
+  (interactive (list (read-from-minibuffer "Module to use: " nil
+					   nil               nil
+					   nil               "default")))
+
+  (let* ((source                  "source")
+	 (get-directory-file-name (lambda (dir)
+				    (directory-file-name (file-name-directory
+							   dir))))
+	 (file-name               (buffer-file-name))
+	 (curr-dir                (funcall
+				    get-directory-file-name
+				    file-name)))
+    (while (not (string-equal (file-name-nondirectory curr-dir) source))
+      (setq curr-dir (funcall get-directory-file-name curr-dir)))
+
+    (ceylon-startCompile-manual
+      (concat "cd " curr-dir "/../; ceylon run " module)
+      (ceylon-helper~buffer-size)
+      ceylon-compileRun-buffer
+      "A Ceylon process is currently running!")))
+(add-hook 'ceylon-mode-hook (lambda ()
+			      (setq electric-indent-chars
+				(append electric-indent-chars '(?})))))
+(add-hook 'ceylon-mode-hook (lambda ()
+			      (define-key ceylon-mode-map (kbd "C-x c c")
+				'ceylon-compile-manual)))
+(add-hook 'ceylon-mode-hook (lambda ()
+			      (define-key ceylon-mode-map (kbd "C-x c r")
+				'ceylon-run-manual)))
+(add-hook 'ceylon-mode-hook (lambda ()
+			      (define-key ceylon-mode-map (kbd "C-x c m")
+				'ceylon-run-module-manual)))
