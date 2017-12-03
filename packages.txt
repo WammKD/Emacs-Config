@@ -1,1 +1,1 @@
-(clojure-mode lua-mode web-mode)
+(ac-geiser auto-complete popup geiser auto-complete popup clojure-mode enh-ruby-mode geiser lua-mode popup robe inf-ruby web-mode)

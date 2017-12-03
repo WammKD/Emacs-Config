@@ -396,3 +396,29 @@ prefer for `sh-mode'.  It is automatically added to
         tab-width        2
         indent-tabs-mode t))
 (add-hook 'sh-mode-hook 'gker-setup-sh-mode)
+
+  ;; Ruby Shit
+(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+;; (add-hook    'enh-ruby-mode-hook 'ac-robe-setup)
+
+(defun ruby-send-region-custom ()
+  (interactive)
+  (setq cb (current-buffer))
+  (if (not (get-buffer "*ruby*"))
+      (progn
+	(inf-ruby)
+	(switch-to-buffer-other-window cb)))
+  (if (use-region-p)
+      (ruby-send-region (region-beginning) (region-end))
+    (ruby-send-region (line-beginning-position) (line-end-position))))
+
+(add-hook 'enh-ruby-mode-hook (lambda ()
+                                (local-set-key
+                                  (kbd "C-x r e")
+                                  #'ruby-send-region-custom)))
+(add-hook 'enh-ruby-mode-hook (lambda ()
+                                (local-set-key (kbd "C-x r q") #'inf-ruby)))
+(add-hook 'enh-ruby-mode-hook (lambda ()
+                                (setq ruby-indent-level 2
+                                      tab-width         2
+                                      indent-tabs-mode  t)))
