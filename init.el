@@ -43,6 +43,23 @@
 ;;   (package-list-packages))
 
 ;; Emacs Shit
+(add-hook 'emacs-lisp-mode-hook (lambda ()
+                                  (setq indent-tabs-mode nil)))
+
+(defun join-next-line ()
+  "Join this line to following and fix up whitespace at join.\nIf there is a fill prefix, delete it from the beginning of the following line."
+  (interactive)
+  (join-line -1))
+
+(global-set-key (kbd "M-n")        'next-line)
+(global-set-key (kbd "M-p")        'previous-line)
+(global-set-key (kbd "RET")        'newline-and-indent)
+(global-set-key (kbd "M-j")        'join-next-line)
+(global-set-key (kbd "M-RET")      'join-next-line)
+(global-set-key (kbd "C-M-j")      'indent-new-comment-line)
+(global-set-key (kbd "<C-return>") 'indent-new-comment-line)
+;; (global-set-key (kbd "<M-return>") 'indent-new-comment-line)
+
 (setq column-number-mode t)
 
 ;; Eshell Shit
@@ -62,4 +79,11 @@
     ((ceylon-indent-line   . tab-width)
      (ceylon-format-region . tab-width)))
   (smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon ;; 'lua
-			))
+                        ))
+
+  ;; Scheme Shit
+(put 'if 'scheme-indent-function 2)
+(setq scheme-program-name "guile")
+(global-set-key (kbd "C-M-r") 'run-scheme)
+(add-hook 'scheme-mode-hook (lambda ()
+                              (setq indent-tabs-mode nil)))
