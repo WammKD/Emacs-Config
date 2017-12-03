@@ -85,6 +85,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "M-{")        'insert-curly-braces)
 (global-set-key (kbd "M-\"")       'insert-pair)
 (global-set-key (kbd "C-x M-r")    'revert-buffer-no-confirm)
+(global-set-key [f7]               'ispell)
 
 (setq column-number-mode t)
 
@@ -188,5 +189,3 @@ If there is a fill prefix, delete it from the beginning of the following line."
   (with-current-buffer "*scratch*"
     (flyspell-mode 1)))
 (add-hook 'after-init-hook 'my-scratch-flyspell-mode)
-
-(global-set-key [f7] 'ispell)
