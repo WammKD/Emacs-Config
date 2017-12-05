@@ -222,7 +222,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
     ;; Tetris Shit
 (setq tetris-score-file "~/.emacs.d/tetris-scores")
     ;; Snake Shit
-(setq snake-score-file "~/.emacs.d/snake-scores")
+(setq  snake-score-file "~/.emacs.d/snake-scores")
 
 ;; Theme Shit
 (defun on-after-init ()
