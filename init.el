@@ -251,6 +251,11 @@ If there is a fill prefix, delete it from the beginning of the following line."
 ;; Coding Shit?
 (require 'smart-tabs-mode)
 
+;; (smart-tabs-add-language-support web    web-mode-hook
+;;   ((web-mode-indent-line . web-mode-code-indent-offset)))
+(smart-tabs-add-language-support bash   sh-mode-hook
+  ((sh-indent-line       . sh-basic-offset)
+   (sh-basic-indent-line . sh-basic-offset)))
 (smart-tabs-add-language-support lua    lua-mode-hook
   ((lua-indent-line . lua-indent-level)))
 (smart-tabs-add-language-support ceylon ceylon-mode-hook
