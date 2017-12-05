@@ -537,21 +537,21 @@ prefer for `sh-mode'.  It is automatically added to
 (defconst ceylon-compileRun-buffer   "*Ceylon Program*"
   "The name of the buffer where output from compiling or running a Ceylon file goes.")
 (setq     same-window-buffer-names   (cons
-				       ceylon-compileRun-buffer
-				       same-window-buffer-names))
+                                       ceylon-compileRun-buffer
+                                       same-window-buffer-names))
 (defun    ceylon-helper~buffer-size  ()
   (floor (* .75 (window-height))))
 (defun    ceylon-startCompile-manual (command win-height buffer error-message)
   (if (get-buffer-process buffer)
       (progn
-	(message error-message)
-	(get-buffer-process buffer))
+        (message error-message)
+        (get-buffer-process buffer))
     (progn
       (setq buff-win (get-buffer-window buffer))
       (setq orig-sts (not (equal buff-win (get-buffer-window))))
 
       (when (not buff-win)
-	(split-window-vertically win-height))
+        (split-window-vertically win-height))
 
       (when orig-sts (other-window 1))
       (async-shell-command command buffer)
@@ -562,13 +562,13 @@ prefer for `sh-mode'.  It is automatically added to
   (interactive)
 
   (let* ((source                  "source")
-	 (get-directory-file-name (lambda (dir)
-				    (directory-file-name (file-name-directory
-							   dir))))
-	 (file-name               (buffer-file-name))
-	 (curr-dir                (funcall
-				    get-directory-file-name
-				    file-name)))
+         (get-directory-file-name (lambda (dir)
+                                    (directory-file-name (file-name-directory
+                                                           dir))))
+         (file-name               (buffer-file-name))
+         (curr-dir                (funcall
+                                    get-directory-file-name
+                                    file-name)))
     (while (not (string-equal (file-name-nondirectory curr-dir) source))
       (setq curr-dir (funcall get-directory-file-name curr-dir)))
 
@@ -579,19 +579,19 @@ prefer for `sh-mode'.  It is automatically added to
       "A Ceylon process is currently running!")))
 (defun    ceylon-run-manual          (funct-or-class module)
   (interactive (list
-		 (read-from-minibuffer
-		   "Function or class name to run: " nil nil
+                 (read-from-minibuffer
+                   "Function or class name to run: " nil nil
                    nil                               nil (file-name-base))
-		 (read-from-minibuffer
-		   "Module to use: "                 nil nil
+                 (read-from-minibuffer
+                   "Module to use: "                 nil nil
                    nil                               nil "default")))
 
   (let* ((source                  "source")
-	 (get-directory-file-name (lambda (dir)
-				    (directory-file-name (file-name-directory
-							   dir))))
-	 (file-name               (buffer-file-name))
-	 (curr-dir                (funcall get-directory-file-name file-name)))
+         (get-directory-file-name (lambda (dir)
+                                    (directory-file-name (file-name-directory
+                                                           dir))))
+         (file-name               (buffer-file-name))
+         (curr-dir                (funcall get-directory-file-name file-name)))
     (while (not (string-equal (file-name-nondirectory curr-dir) source))
       (setq curr-dir (funcall get-directory-file-name curr-dir)))
 
@@ -602,17 +602,17 @@ prefer for `sh-mode'.  It is automatically added to
       "A Ceylon process is currently running!")))
 (defun    ceylon-run-module-manual   (module)
   (interactive (list (read-from-minibuffer "Module to use: " nil
-					   nil               nil
-					   nil               "default")))
+                                           nil               nil
+                                           nil               "default")))
 
   (let* ((source                  "source")
-	 (get-directory-file-name (lambda (dir)
-				    (directory-file-name (file-name-directory
-							   dir))))
-	 (file-name               (buffer-file-name))
-	 (curr-dir                (funcall
-				    get-directory-file-name
-				    file-name)))
+         (get-directory-file-name (lambda (dir)
+                                    (directory-file-name (file-name-directory
+                                                           dir))))
+         (file-name               (buffer-file-name))
+         (curr-dir                (funcall
+                                    get-directory-file-name
+                                    file-name)))
     (while (not (string-equal (file-name-nondirectory curr-dir) source))
       (setq curr-dir (funcall get-directory-file-name curr-dir)))
 
@@ -622,17 +622,17 @@ prefer for `sh-mode'.  It is automatically added to
       ceylon-compileRun-buffer
       "A Ceylon process is currently running!")))
 (add-hook 'ceylon-mode-hook (lambda ()
-			      (setq electric-indent-chars
-				(append electric-indent-chars '(?})))))
+                              (setq electric-indent-chars
+                                (append electric-indent-chars '(?})))))
 (add-hook 'ceylon-mode-hook (lambda ()
-			      (define-key ceylon-mode-map (kbd "C-x c c")
-				'ceylon-compile-manual)))
+                              (define-key ceylon-mode-map (kbd "C-x c c")
+                                'ceylon-compile-manual)))
 (add-hook 'ceylon-mode-hook (lambda ()
-			      (define-key ceylon-mode-map (kbd "C-x c r")
-				'ceylon-run-manual)))
+                              (define-key ceylon-mode-map (kbd "C-x c r")
+                                'ceylon-run-manual)))
 (add-hook 'ceylon-mode-hook (lambda ()
-			      (define-key ceylon-mode-map (kbd "C-x c m")
-				'ceylon-run-module-manual)))
+                              (define-key ceylon-mode-map (kbd "C-x c m")
+                                'ceylon-run-module-manual)))
 
     ;; Android Shit
 (setq android-mode-builder (quote gradle)
@@ -702,43 +702,43 @@ prefer for `sh-mode'.  It is automatically added to
   (interactive)
   (when (not (eq (get-buffer "*vc-dir*") (current-buffer)))
     (if (get-buffer "*vc-dir*")
-	(progn
-	  (setq vc_buf
-		(with-current-buffer "*vc-dir*"
-		  (buffer-substring-no-properties (point-min) (point-max))))
-	  (kill-buffer "*vc-dir*")
-	  (vc-dir (substring vc_buf (+ (string-match-p
-					 "Working dir: "
-					 vc_buf) 13) (string-match-p
-						       "\nBranch     : "
-						       vc_buf))))
+        (progn
+          (setq vc_buf
+                (with-current-buffer "*vc-dir*"
+                  (buffer-substring-no-properties (point-min) (point-max))))
+          (kill-buffer "*vc-dir*")
+          (vc-dir (substring vc_buf (+ (string-match-p
+                                         "Working dir: "
+                                         vc_buf) 13) (string-match-p
+                                                       "\nBranch     : "
+                                                       vc_buf))))
     (call-interactively 'vc-dir)))
   (when (string-equal (vc-next-action nil) "Fileset is up-to-date")
     (message "Pushing to Git")
     (shell-command "git push &" "*Git Push Output*")
     ;; (enlarge-window 20)
     (run-at-time "20 sec" nil (lambda ()
-				(setq buf_conts
-				      (with-current-buffer "*Git Push Output*"
-					(buffer-substring-no-properties
-					  (point-min)
-					  (point-max))))
-				(setq buf_sub
-				      (substring
-				        buf_conts
-					0
-					(+ (string-match-p
-					     ": "
-					     (substring
-					       buf_conts
-					       0
-					       (string-match-p
-						 "\n"
-						 buf_conts))) 2)))
-				(when (not (string-equal buf_sub
-					"Username for 'https://github.com': "))
-				  (kill-buffer "*Git Push Output*")
-				  (delete-other-windows))))))
+                                (setq buf_conts
+                                      (with-current-buffer "*Git Push Output*"
+                                        (buffer-substring-no-properties
+                                          (point-min)
+                                          (point-max))))
+                                (setq buf_sub
+                                      (substring
+                                        buf_conts
+                                        0
+                                        (+ (string-match-p
+                                             ": "
+                                             (substring
+                                               buf_conts
+                                               0
+                                               (string-match-p
+                                                 "\n"
+                                                 buf_conts))) 2)))
+                                (when (not (string-equal buf_sub
+                                        "Username for 'https://github.com': "))
+                                  (kill-buffer "*Git Push Output*")
+                                  (delete-other-windows))))))
 (global-set-key (kbd "C-x v v") 'vc-next-action-new)
 (put 'dired-find-alternate-file 'disabled nil)
 
