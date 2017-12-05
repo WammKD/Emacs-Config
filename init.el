@@ -549,7 +549,9 @@ prefer for `sh-mode'.  It is automatically added to
 (global-set-key (kbd "C-h j") 'javadoc-lookup)
 (add-hook 'java-mode-hook '(lambda ()
                              (define-key java-mode-map (kbd "C-x j i")
-                               'add-java-import)))
+                               'javadoc-add-import)
+                             (define-key java-mode-map (kbd "C-x j s")
+                               'javadoc-sort-imports)))
 
     ;; Scala Shit
 (add-hook 'scala-mode-hook
