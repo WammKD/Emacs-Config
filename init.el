@@ -289,18 +289,35 @@ If there is a process already running in `* Guile REPL *', switch to that buffer
 (add-hook 'after-init-hook 'my-scratch-flyspell-mode)
 
     ;; LaTeX Shit
-(setq TeX-auto-save  t)
-(setq TeX-parse-self t)
-(setq TeX-save-query nil)
-(setq TeX-PDF-mode   t)
-
+; Make sure to install auctex for any of this to work
 (defun LaTeX-insert-pair (&optional arg)
   "Enclose following ARG sexps in LaTeX quotations (`` and '').
 Leave point after open-paren."
   (interactive "*P")
 
-  (insert-pair arg "``" "''"))
+  (if (not mark-active)
+      (progn
+        (insert-pair arg ?\` ?\')
+        (insert "`'")
+        (backward-char))
+    (progn
+      (setq re (region-end))
+      (setq rb (region-beginning))
+
+      (insert-pair arg ?\` ?\')
+
+      (goto-char (1+ rb))
+      (insert "`")
+
+      (goto-char (+ 2 re))
+      (insert "'")
+      (backward-char))))
 (defun my-LaTeX-mode ()
+  (setq TeX-auto-save  t)
+  (setq TeX-parse-self t)
+  (setq TeX-save-query nil)
+  (setq TeX-PDF-mode   t)
+
   (add-to-list 'TeX-view-program-list
                '("Xreader" "xreader --page-index=%(outpage) %o"))
   (setq TeX-view-program-selection '((output-pdf "Xreader"))))
@@ -452,8 +469,8 @@ prefer for `sh-mode'.  It is automatically added to
                                       indent-tabs-mode  t)))
 
   ;; Rust Shit
-(require 'rusti)
-(setq rusti-program "~/.cargo/bin/rust-repl")
+;; (require 'rusti)
+;; (setq rusti-program "~/.cargo/bin/rust-repl")
 
 (defun rust-new (exec? name)
   (interactive (list
