@@ -698,3 +698,61 @@ prefer for `sh-mode'.  It is automatically added to
                            (add-to-list
                              'gud-jdb-classpath
                              "~/Android/Sdk/platforms/android-26/android.jar")))
+
+  ;; Version Control
+(defun vc-next-action-new ()
+  (interactive)
+  (when (not (eq (get-buffer "*vc-dir*") (current-buffer)))
+    (if (get-buffer "*vc-dir*")
+	(progn
+	  (setq vc_buf
+		(with-current-buffer "*vc-dir*"
+		  (buffer-substring-no-properties (point-min) (point-max))))
+	  (kill-buffer "*vc-dir*")
+	  (vc-dir (substring vc_buf (+ (string-match-p
+					 "Working dir: "
+					 vc_buf) 13) (string-match-p
+						       "\nBranch     : "
+						       vc_buf))))
+    (call-interactively 'vc-dir)))
+  (when (string-equal (vc-next-action nil) "Fileset is up-to-date")
+    (message "Pushing to Git")
+    (shell-command "git push &" "*Git Push Output*")
+    ;; (enlarge-window 20)
+    (run-at-time "20 sec" nil (lambda ()
+				(setq buf_conts
+				      (with-current-buffer "*Git Push Output*"
+					(buffer-substring-no-properties
+					  (point-min)
+					  (point-max))))
+				(setq buf_sub
+				      (substring
+				        buf_conts
+					0
+					(+ (string-match-p
+					     ": "
+					     (substring
+					       buf_conts
+					       0
+					       (string-match-p
+						 "\n"
+						 buf_conts))) 2)))
+				(when (not (string-equal buf_sub
+					"Username for 'https://github.com': "))
+				  (kill-buffer "*Git Push Output*")
+				  (delete-other-windows))))))
+(global-set-key (kbd "C-x v v") 'vc-next-action-new)
+(put 'dired-find-alternate-file 'disabled nil)
+
+
+
+
+
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip ((t (:foreground "white"))))
+ '(company-tooltip-selection ((t (:background "green" :foreground "black")))))
