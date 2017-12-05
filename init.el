@@ -100,8 +100,9 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "C-x M-r")    'revert-buffer-no-confirm)
 (global-set-key [f7]               'ispell)
 
-(setq browse-url-browser-function 'browse-url-qutebrowser)
-(setq column-number-mode          t)
+(setq browse-url-browser-function     'browse-url-qutebrowser)
+(setq column-number-mode              t)
+(setq scroll-preserve-screen-position t)
 
 (put 'upcase-region   'disabled nil)
 (put 'downcase-region 'disabled nil)
