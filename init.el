@@ -109,6 +109,9 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (put 'upcase-region   'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+  ;; Window Shit
+(require 'window-size)
+
   ;; Clipboard Shit
 (defun copy-to-clipboard ()
   (interactive)
