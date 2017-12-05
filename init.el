@@ -149,25 +149,21 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (setq shell-file-name "bash")
 
   ;; Buffers Shit
-; Turn on iswitchb to change buffers with [C-x b]
-(iswitchb-mode t)
+; Turn on ido to change buffers with [C-x b]
+(ido-mode t)
 
-(global-set-key (kbd "C-x C-b") 'iswitchb-buffer)
-(setq iswitchb-buffer-ignore (append
-                               '("\\*Completions\\*" "\\*Messages\\*"
-                                 "\\*epc con"        "\\*Minibuf-"
-                                 "*epc:server:"      "\\*code-conversion-work\\*"
-                                 "\\*Echo Area"      "\\*VC-Git\\* tmp status-"   "\\*vc\\*")
-                               iswitchb-buffer-ignore))
+(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+(setq ido-ignore-buffers (append
+                           '("\\*Completions\\*" "\\*Messages\\*"
+                             "\\*epc con"        "\\*Minibuf-"
+                             "*epc:server:"      "\\*code-conversion-work\\*"
+                             "\\*Echo Area"      "\\*VC-Git\\* tmp status-"   "\\*vc\\*")
+                           ido-ignore-buffers))
+(set-face-attribute 'ido-first-match nil :inherit 'font-lock-function-name-face)
+(define-key (cdr ido-minor-mode-map-entry) [remap write-file] nil)
+(define-key (cdr ido-minor-mode-map-entry) [remap  find-file] nil)
+
 ; Allow keys to work like dzen because I'm lazy
-(defun iswitchb-local-keys ()
-  (mapc
-    (lambda (K)
-      (let* ((key (car K)) (fun (cdr K)))
-        (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
-    '(("<right>" . iswitchb-next-match) ("<left>"  . iswitchb-prev-match)
-      ("<next>"  . iswitchb-next-match) ("<prior>" . iswitchb-prev-match)
-      ("<up>"    . ignore)              ("<down>"  . ignore))))
 (defun ido-local-keys ()
   (mapc
     (lambda (K)
@@ -176,9 +172,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
     '(("<right>" . ido-next-match) ("<left>"  . ido-prev-match)
       ("<next>"  . ido-next-match) ("<prior>" . ido-prev-match)
       ("<up>"    . ignore)         ("<down>"  . ignore))))
-
-(add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
-(add-hook                'ido-setup-hook      'ido-local-keys)
+(add-hook 'ido-setup-hook 'ido-local-keys)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Custom screen splitting functions ;;
@@ -782,3 +776,9 @@ prefer for `sh-mode'.  It is automatically added to
  ;; If there is more than one, they won't work right.
  '(company-tooltip ((t (:foreground "white"))))
  '(company-tooltip-selection ((t (:background "green" :foreground "black")))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
