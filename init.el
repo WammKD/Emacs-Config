@@ -45,6 +45,11 @@
 ;; Emacs Shit
 (load-file "~/.emacs.d/lisp/cursors.el")
 (delete-selection-mode t)
+(add-hook      'after-init-hook (lambda ()
+                                  (when (and
+                                          (string= "*scratch*" (buffer-name))
+                                          (not (buffer-file-name)))
+                                    (display-splash-screen))))
 (add-hook 'emacs-lisp-mode-hook (lambda ()
                                   (setq indent-tabs-mode nil)))
 
@@ -99,6 +104,9 @@ If there is a fill prefix, delete it from the beginning of the following line."
 
 (setq browse-url-browser-function 'browse-url-qutebrowser)
 (setq column-number-mode          t)
+
+(put 'upcase-region   'disabled nil)
+(put 'downcase-region 'disabled nil)
 
   ;; Clipboard Shit
 (defun copy-to-clipboard ()
@@ -207,6 +215,12 @@ If there is a fill prefix, delete it from the beginning of the following line."
       (list (cons 'fullscreen next)))))
 
 (define-key global-map [f11] 'switch-fullscreen)
+
+  ;; Games Shit
+    ;; Tetris Shit
+(setq tetris-score-file "~/.emacs.d/tetris-scores")
+    ;; Snake Shit
+(setq snake-score-file "~/.emacs.d/snake-scores")
 
 ;; Theme Shit
 (defun on-after-init ()
