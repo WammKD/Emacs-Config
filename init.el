@@ -57,13 +57,13 @@
   ;; Wrap highlighted text in pair
 (defun insert-square-brackets (&optional arg)
   "Enclose following ARG sexps in square brackets.
-Leave point after open-paren."
+Leave point after open-bracket."
   (interactive "*P")
 
   (insert-pair arg ?\[ ?\]))
 (defun insert-curly-braces (&optional arg)
   "Enclose following ARG sexps in curly braces.
-Leave point after open-paren."
+Leave point after open-brace."
   (interactive "*P")
 
   (insert-pair arg ?\{ ?\}))
@@ -99,6 +99,8 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "M-]")        'insert-square-brackets)
 (global-set-key (kbd "M-{")        'insert-curly-braces)
 (global-set-key (kbd "M-\"")       'insert-pair)
+(global-set-key (kbd "M-'")        'insert-pair)
+(global-set-key (kbd "M-\-")       'abbrev-prefix-mark)
 (global-set-key (kbd "C-x M-r")    'revert-buffer-no-confirm)
 (global-set-key [f7]               'ispell)
 
