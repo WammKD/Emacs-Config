@@ -86,6 +86,8 @@ If there is a fill prefix, delete it from the beginning of the following line."
 
   (start-process (concat "qutebrowser " url) nil "qutebrowser" url))
 
+(unless (display-graphic-p)
+  (global-set-key (kbd "M-[ z") (kbd "<backtab>")))
 (global-set-key (kbd "M-n")        'next-line)
 (global-set-key (kbd "M-p")        'previous-line)
 (global-set-key (kbd "RET")        'newline-and-indent)
