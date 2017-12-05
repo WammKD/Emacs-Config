@@ -263,8 +263,16 @@ If there is a fill prefix, delete it from the beginning of the following line."
 
   ;; Scheme Shit
 (put 'if 'scheme-indent-function 2)
+
 (setq scheme-program-name "guile")
-(global-set-key (kbd "C-M-r") 'run-scheme)
+(defun run-guile ()
+  "Run Guile via Geiser, input and output via buffer `* Guile REPL *'.
+If there is a process already running in `* Guile REPL *', switch to that buffer."
+  (interactive)
+
+  (geiser 'guile))
+
+(global-set-key (kbd "C-M-r") 'run-guile)
 (add-hook 'scheme-mode-hook (lambda ()
                               (setq indent-tabs-mode nil)))
 
