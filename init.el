@@ -5,11 +5,11 @@
 ;; Packages
 (require 'package)
 
-(let* ((no-ssl   (and
-                   (memq system-type '(windows-nt ms-dos))
-                   (not (gnutls-available-p))))
-       (melpaURL (concat (if no-ssl "http" "https") "://melpa.org/packages/"))
-       (gnuURL   (concat (if no-ssl "http" "https") "://elpa.gnu.org/packages/")))
+(let* ((http     (if (and
+                       (memq system-type '(windows-nt ms-dos))
+                       (not (gnutls-available-p))) "http" "https"))
+       (melpaURL (concat http "://melpa.org/packages/"))
+       (gnuURL   (concat http "://elpa.gnu.org/packages/")))
   (add-to-list 'package-archives (cons "melpa" melpaURL) t)
   ;; For important compatibility libraries like cl-lib
   (when (< emacs-major-version 24)
@@ -38,9 +38,7 @@
                              (insert-file-contents packagesList)
                              (buffer-string))))))
 
-;; (defun package-list-updated-packages ()
-;;   (package-refresh-contents)
-;;   (package-list-packages))
+;; (auto-package-update-maybe)
 
 ;; Emacs Shit
 (load-file "~/.emacs.d/lisp/cursors.el")
