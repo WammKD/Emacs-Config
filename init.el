@@ -285,7 +285,9 @@ If there is a process already running in `* Guile REPL *', switch to that buffer
 
 (global-set-key (kbd "C-M-r") 'run-guile)
 (add-hook 'scheme-mode-hook (lambda ()
-                              (setq indent-tabs-mode nil)))
+                              (setq indent-tabs-mode nil)
+                              (auto-complete-mode t)
+                              (ac-geiser-setup)))
 
   ;; Text Shit
 (require 'text-reading-mode)
