@@ -40,6 +40,8 @@
 
 ;; (auto-package-update-maybe)
 
+(global-set-key (kbd "C-x p l") 'list-packages)
+
 ;; Emacs Shit
 (load-file "~/.emacs.d/lisp/cursors.el")
 (delete-selection-mode t)
@@ -222,9 +224,9 @@ If there is a fill prefix, delete it from the beginning of the following line."
 
   ;; Games Shit
     ;; Tetris Shit
-(setq tetris-score-file "~/.emacs.d/tetris-scores")
+(setq tetris-score-file "~/.emacs.d/game_scores/tetris-scores")
     ;; Snake Shit
-(setq  snake-score-file "~/.emacs.d/snake-scores")
+(setq  snake-score-file "~/.emacs.d/game_scores/snake-scores")
 
 ;; Theme Shit
 (defun on-after-init ()
