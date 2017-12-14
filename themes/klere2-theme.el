@@ -70,7 +70,7 @@
         `(hl-line                                  ((,class (:background  ,bg3))))
         `(fringe                                   ((,class (:background ,bg3 :foreground ,fg4))))
         `(cursor                                   ((,class (:background ,bg4))))
-        `(show-paren-match-face                    ((,class (:background ,warning))))
+        `(show-paren-match-face                    ((,class (:foreground ,warning))))
         `(isearch                                  ((,class (:bold t :foreground ,warning :background ,bg4))))
         `(mode-line                                ((,class (:box (:line-width 1 :color nil :style pressed-button) :foreground ,fg1 :background ,bg1))))
         `(mode-line-inactive                       ((,class (:box (:line-width 1 :color nil :style pressed-button) :foreground ,fg4 :background ,bg3 :weight normal))))
