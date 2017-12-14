@@ -1,4 +1,4 @@
--theme.el --- Emacs theme with a dark background.
+;;; klere2-theme.el --- Emacs theme with a dark background.
 
 ;; Copyright (C) 2014 , Wamm K. D.
 
@@ -35,6 +35,7 @@
        (fg3     "#d1d1d1")
        (fg4     "#bbbbbb")
        (bg1     "#000000")
+       (bg2     "#101010")
        (bg3     "#181818")
        (bg4     "#282828")
        (bg5     "#393939")
@@ -51,7 +52,7 @@
        (warning "#ff0000"))
    (custom-theme-set-faces
    'klere2
-        `(default ((,class (:background ,bg1 :foreground ,fg1))))
+        `(default ((,class (:background ,bg2 :foreground ,fg1))))
         `(font-lock-builtin-face ((,class (:foreground ,builtin))))
         `(font-lock-comment-face ((,class (:foreground ,comment))))
 	`(font-lock-negation-char-face ((,class (:foreground ,const))))
