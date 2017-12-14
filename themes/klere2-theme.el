@@ -44,7 +44,7 @@
        (builtin "#F52749")
        (keyword "#007bb3")
        (const   "#00d1e0")
-       (comment "#434343") ;; #e01d1d
+       (comment "#585858") ;; #e01d1d
        (func    "#622f7d")
        (str     "#718c00")
        (type    "#eab700")
@@ -72,9 +72,9 @@
 	`(cursor ((,class (:background ,bg4))))
         `(show-paren-match-face ((,class (:background ,warning))))
         `(isearch ((,class (:bold t :foreground ,warning :background ,bg4))))
-        `(mode-line ((,class (:box (:line-width 1 :color nil :style pressed-button) :bold t :foreground ,key3 :background ,bg1))))
+        `(mode-line ((,class (:box (:line-width 1 :color nil :style pressed-button) :foreground ,fg1 :background ,bg1))))
         `(mode-line-inactive ((,class (:box (:line-width 1 :color nil :style pressed-button) :foreground ,fg4 :background ,bg3 :weight normal))))
-        `(mode-line-buffer-id ((,class (:bold t :foreground ,func :background nil))))
+        `(mode-line-buffer-id ((,class (:bold t :foreground ,key3 :background nil))))
 	`(mode-line-highlight ((,class (:foreground ,keyword :box nil :weight bold))))
         `(mode-line-emphasis ((,class (:foreground ,fg1))))
 	`(vertical-border ((,class (:foreground ,fg3))))
