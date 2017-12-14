@@ -44,7 +44,7 @@
        (builtin "#F52749")
        (keyword "#007bb3")
        (const   "#00d1e0")
-       (comment "#e01d1d")
+       (comment "#434343") ;; #e01d1d
        (func    "#622f7d")
        (str     "#718c00")
        (type    "#eab700")
