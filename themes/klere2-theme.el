@@ -76,7 +76,7 @@
         `(mode-line                                ((,class (:foreground ,fg1 :background ,bg3 :line-width 8))))
         `(mode-line-inactive                       ((,class (:foreground ,fg4 :background ,bg2 :weight     normal))))
         `(mode-line-buffer-id                      ((,class (:bold t :foreground ,key3 :background nil))))
-        `(mode-line-highlight                      ((,class (:foreground ,keyword :box nil :weight bold))))
+        `(mode-line-highlight                      ((,class (:foreground ,func :box nil :weight bold))))
         `(mode-line-emphasis                       ((,class (:foreground ,fg1))))
         `(vertical-border                          ((,class (:foreground ,fg3))))
         `(minibuffer-prompt                        ((,class (:bold t :foreground ,keyword))))
