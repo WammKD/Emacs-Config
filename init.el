@@ -229,6 +229,156 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (setq  snake-score-file "~/.emacs.d/game_scores/snake-scores")
 
 ;; Theme Shit
+; Mode-line
+(add-hook 'after-init-hook
+  (lambda ()
+    (when (display-graphic-p)
+      (require 'all-the-icons)
+
+      (defun custom-modeline-modified ()
+        (let* ((config-alist '(("*" all-the-icons-faicon-family
+                                    all-the-icons-faicon
+                                    "chain-broken"
+                                    :height    1.2
+                                    :v-adjust -0.0)
+                               ("-" all-the-icons-faicon-family
+                                    all-the-icons-faicon
+                                    "link"
+                                    :height    1.2
+                                    :v-adjust -0.0)
+                               ("%" all-the-icons-octicon-family
+                                    all-the-icons-octicon
+                                    "lock"
+                                    :height    1.2
+                                    :v-adjust  0.1)))
+               (result       (cdr (assoc
+                                    (format-mode-line "%*")
+                                    config-alist))))
+          (propertize (apply (cadr result) (cddr result))
+                      'face       `(:family ,(funcall (car result)))
+                      'mouse-face `mode-line-highlight
+                      'local-map  (if (string= "%" (format-mode-line "%*"))
+                                      `(keymap (mode-line keymap (mouse-1 . mode-line-toggle-read-only)))
+                                    `(keymap (mode-line keymap (mouse-1 . mode-line-toggle-modified))))
+                      'help-echo  (if (string= "%" (format-mode-line "%*"))
+                                      `mode-line-read-only-help-echo
+                                    `mode-line-modified-help-echo))))
+
+      (defun custom-modeline-region-info ()
+        (let ((words (count-words (point-min) (point-max))))
+          (concat
+            (propertize (format "  %s words " words)
+                        'face `(:background "#007bb3" :height 0.9))
+            (propertize (format "  %s " (all-the-icons-octicon "pencil") words)
+                        'face `(:family ,(all-the-icons-octicon-family) :background "#007bb3")
+                        'display '(raise -0.0))
+            (propertize " %l:"
+                        'face `(:background "#007bb3" :height 0.9))
+            (propertize "%c"
+                        'face (if (> (current-column) 80)
+                                  `(:foreground "#101010" :background "#007bb3" :height 0.9)
+                                `(:background "#007bb3" :height 0.9)))
+            (propertize " "
+                        'face `(:background "#007bb3" :height 0.9))
+            (propertize "%p"
+                        'help-echo  "Size indication mode
+mouse-1: Display Line and Column Mode Menu"
+                        'mouse-face `mode-line-highlight
+                        'local-map  `(keymap
+                                       (mode-line
+                                         keymap
+                                         (down-mouse-1
+                                           keymap
+                                           (column-number-mode
+                                             menu-item
+                                             "Display Column Numbers"
+                                             column-number-mode
+                                             :help   "Toggle displaying column numbers in the mode-line"
+                                             :button (:toggle . column-number-mode))
+                                           (line-number-mode
+                                             menu-item
+                                             "Display Line Numbers"
+                                             line-number-mode
+                                             :help   "Toggle displaying line numbers in the mode-line"
+                                             :button (:toggle . line-number-mode))
+                                           (size-indication-mode
+                                             menu-item
+                                             "Display Size Indication"
+                                             size-indication-mode
+                                             :help   "Toggle displaying a size indication in the mode-line"
+                                             :button (:toggle . size-indication-mode))
+                                           "Toggle Line and Column Number Display")))
+                        'face       `(:background "#007bb3" :height 0.9))
+            (propertize "  "
+                        'face `(:background "#007bb3" :height 0.9)))))
+      ;; mode-line-position
+
+      (defun -custom-modeline-github-vc ()
+        (let ((branch (mapconcat 'concat (cdr (split-string
+                                                vc-mode
+                                                "[:-]")) "-")))
+          (concat
+            (propertize (format " %s" (all-the-icons-alltheicon "git"))
+                        'face `(:height 0.9) 'display '(raise -0.1))
+            " · "
+            (propertize (format "%s" (all-the-icons-octicon "git-branch"))
+                        'face `(:height 1.0 :family ,(all-the-icons-octicon-family))
+                        'display '(raise -0.1))
+            (propertize (format " %s" branch) 'face `(:height 0.9)))))
+      (defun -custom-modeline-svn-vc ()
+        (let ((revision (cadr (split-string vc-mode "-"))))
+          (concat
+            (propertize (format " %s" (all-the-icons-faicon "cloud"))
+                        'face `(:height 1.2) 'display '(raise -0.1))
+            (propertize (format " · %s" revision)
+                        'face `(:height 0.9)))))
+      (defun custom-modeline-icon-vc ()
+        (when vc-mode
+          (cond
+           ((string-match "Git[:-]" vc-mode) (-custom-modeline-github-vc))
+           ((string-match "SVN-" vc-mode) (-custom-modeline-svn-vc))
+           (t (format "%s" vc-mode)))))
+
+      (defun custom-modeline-file-icon ()
+        (if (buffer-file-name)
+            (concat
+              (propertize (all-the-icons-icon-for-file (buffer-file-name))
+                          'face       `(:bold t :foreground "#007bb3" :background nil :height 1.0)
+                          'display    '(raise -0.1)
+                          'local-map  `(keymap
+                                         (header-line
+                                           keymap
+                                           (mouse-3      . mode-line-next-buffer)
+                                           (down-mouse-3 . ignore)
+                                           (mouse-1      . mode-line-previous-buffer)
+                                           (down-mouse-1 . ignore))
+                                         (mode-line
+                                           keymap
+                                           (mouse-3 . mode-line-next-buffer)
+                                           (mouse-1 . mode-line-previous-buffer)))
+                          'mouse-face `mode-line-highlight
+                          'help-echo  "Buffer name
+mouse-1: Previous buffer
+mouse-3: Next buffer")
+              " ")
+          ""))
+
+      (setq-default mode-line-format '("%e" mode-line-front-space
+                                            mode-line-mule-info
+                                            mode-line-client
+                                            (:eval (custom-modeline-modified))
+                                            mode-line-frame-identification
+                                            (:eval (custom-modeline-file-icon))
+                                            mode-line-buffer-identification
+                                            "  "
+                                            (:eval (custom-modeline-region-info))
+                                            "  "
+                                            (:eval (custom-modeline-icon-vc))
+                                            "  "
+                                            mode-line-modes
+                                            mode-line-misc-info
+                                            mode-line-end-spaces)))))
+
 (defun on-after-init ()
   (when (display-graphic-p (selected-frame))
     (load-theme 'klere2 t)))
