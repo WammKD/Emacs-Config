@@ -364,7 +364,7 @@ mouse-3: Next buffer")
           ""))
 
       (setq-default mode-line-format '("%e" mode-line-front-space
-                                            mode-line-mule-info
+                                            ;; mode-line-mule-info
                                             mode-line-client
                                             (:eval (custom-modeline-modified))
                                             mode-line-frame-identification

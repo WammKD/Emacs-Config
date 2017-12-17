@@ -73,7 +73,7 @@
         `(show-paren-match-face                    ((,class (:foreground ,builtin))))
         `(show-paren-match                         ((,class (:foreground ,builtin))))
         `(isearch                                  ((,class (:bold t :foreground ,warning :background ,bg4))))
-        `(mode-line                                ((,class (:foreground ,fg1 :background ,bg4 :line-width 8))))
+        `(mode-line                                ((,class (:foreground ,fg1 :background "#232323" :line-width 8))))
         `(mode-line-inactive                       ((,class (:foreground ,fg4 :background ,bg2 :weight     normal))))
         `(mode-line-buffer-id                      ((,class (:bold t :foreground ,key3 :background nil))))
         `(mode-line-highlight                      ((,class (:foreground ,func :box nil :weight bold))))
