@@ -1029,6 +1029,18 @@ prefer for `sh-mode'.  It is automatically added to
                               (define-key ceylon-mode-map (kbd "C-x c m")
                                 'ceylon-run-module-manual)))
 
+    ;; Clojure Shit
+(setq clojure-indent-style :align-arguments)
+(add-hook 'cider-mode-hook      'ac-flyspell-workaround)
+(add-hook 'cider-mode-hook      'ac-cider-setup)
+(add-hook 'cider-mode-hook      'auto-complete-mode)
+(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
+(add-hook 'cider-repl-mode-hook 'auto-complete-mode)
+(eval-after-load "auto-complete"
+  '(progn
+     (add-to-list 'ac-modes 'cider-mode)
+     (add-to-list 'ac-modes 'cider-repl-mode)))
+
     ;; Android Shit
 (setq android-mode-builder (quote gradle)
       android-mode-sdk-dir "~/Android/Sdk")
