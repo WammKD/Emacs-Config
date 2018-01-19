@@ -920,6 +920,8 @@ prefer for `sh-mode'.  It is automatically added to
                                'javadoc-add-import)
                              (define-key java-mode-map (kbd "C-x j s")
                                'javadoc-sort-imports)))
+(require 'java-repl)
+(global-set-key (kbd "C-x j r") 'run-java)
 
     ;; Scala Shit
 (add-hook 'scala-mode-hook
