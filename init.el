@@ -51,6 +51,7 @@
                                           (not (buffer-file-name)))
                                     (display-splash-screen))))
 (add-hook 'emacs-lisp-mode-hook (lambda ()
+                                  (company-mode t)
                                   (setq indent-tabs-mode nil)))
 
 (defun chomp (str)
