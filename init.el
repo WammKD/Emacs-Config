@@ -54,6 +54,12 @@
                                   (company-mode t)
                                   (setq indent-tabs-mode nil)))
 
+(defun trim-string (string)
+  "Remove white spaces in beginning and ending of STRING.
+White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
+  (replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string
+                                               "[ \t\n]*\\'" ""
+                                               string)))
 (defun chomp (str)
   "Chomp leading and tailing whitespace from STR."
   (replace-regexp-in-string "\\(^[[:space:]\\n]*\\|[[:space:]\\n]*$\\)" "" str))
@@ -637,10 +643,26 @@ If there is a process already running in `* Guile REPL *', switch to that buffer
   (interactive)
 
   (geiser 'guile))
+(defun run-racket ()
+  "Run Guile via Geiser, input and output via buffer `* Guile REPL *'.
+If there is a process already running in `* Guile REPL *', switch to that buffer."
+  (interactive)
+
+  (geiser 'racket))
 
 (global-set-key (kbd "C-M-r") 'run-guile)
 (add-hook 'scheme-mode-hook (lambda ()
                               (setq indent-tabs-mode nil)
+                              (when (string-equal
+                                      "rkt"
+                                      (file-name-extension (buffer-file-name)))
+                                (racket-mode))
+                              (setq geiser-racket-extra-keywords
+                                    '("if-let"    "when-let"
+                                      "if/return" "provide"
+                                      "require"   "unless"
+                                      "when"      "with-handlers"))
+                              (geiser-mode t)
                               (auto-complete-mode t)
                               (ac-geiser-setup)))
 
@@ -1151,6 +1173,39 @@ prefer for `sh-mode'.  It is automatically added to
                                   (delete-other-windows))))))
 (global-set-key (kbd "C-x v v") 'vc-next-action-new)
 (put 'dired-find-alternate-file 'disabled nil)
+
+  ;; Music
+(defun unnecessary-yt ()
+  (interactive)
+
+  (if (boundp 'helm-youtube-key)
+      (helm-youtube)
+    (progn
+      (run-at-time
+        "1 sec"
+        nil
+        (lambda ()
+          (bongo-start)))
+      (run-at-time
+        "1 sec"
+        nil
+        (lambda ()
+          (setq helm-youtube-key (with-temp-buffer
+                                   (insert-file-contents "~/.yt-helm")
+                                   (buffer-string)))
+          (defun helm-youtube-playvideo (video-id)
+            "Format the youtube URL via VIDEO-ID."
+            (setq uri (trim-string (shell-command-to-string
+                                     (concat
+                                       "youtube-dl -f140 -g "
+                                       "http://www.youtube.com/watch?v="
+                                       video-id))))
+            (bongo-insert-uri
+              uri
+              (read-string (concat "Title (default `" uri "'): ") nil nil uri)))
+          (helm-youtube)))
+      (helm-youtube))))
+(global-set-key (kbd "C-c b y") 'unnecessary-yt)
 
 
 
