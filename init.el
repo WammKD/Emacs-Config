@@ -572,8 +572,24 @@ mouse-3: Next buffer")
                                                               :help   "Toggle displaying line numbers in the mode-line"
                                                               :button (:toggle . line-number-mode))
                                                             "Toggle Line and Column Number Display")))))))))))
+      ;; (require 'magit)
+      ;; (defun behind-ahead ()
+      ;;   (let ((pos (string-match "Git[:-]" vc-mode)))
+      ;;     (if (and vc-mode pos)
+      ;;         (let ((behind-ahead (let ((branch (substring vc-mode 5)))
+      ;;                               (magit-rev-diff-count (concat "origin/" branch) branch))))
+      ;;           (if (> (+ (car behind-ahead) (cadr behind-ahead)) 0)
+      ;;               (concat
+      ;;                 " "
+      ;;                 (let ((ahead  (cadr behind-ahead)))
+      ;;                   (if (> ahead  0) (concat "↑" (number-to-string  ahead)) ""))
+      ;;                 (let ((behind (car  behind-ahead)))
+      ;;                   (if (> behind 0) (concat "↓" (number-to-string behind)) ""))
+      ;;                 " ")
+      ;;             ""))
+      ;;       "")))
 
-      (setq-default mode-line-format '("%e" mode-line-front-space
+      (setq-default mode-line-format `("%e" mode-line-front-space
                                             mode-line-mule-info
                                             mode-line-client
                                             mode-line-modified
@@ -583,6 +599,7 @@ mouse-3: Next buffer")
                                             "   "
                                             (:eval (custom-mode-line-position))
                                             (vc-mode vc-mode)
+                                            ;; (:eval (behind-ahead))
                                             "  "
                                             mode-line-modes
                                             mode-line-misc-info
