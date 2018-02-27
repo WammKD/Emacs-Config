@@ -1211,6 +1211,9 @@ prefer for `sh-mode'.  It is automatically added to
                                             nil
                                           '(display-buffer-same-window)))))
 (global-set-key (kbd "C-x m") 'magit-status)
+(add-hook 'magit-mode-hook (lambda ()
+                             (local-set-key (kbd "C-c p") 'magit-pull)
+                             (local-set-key (kbd "C-c P") 'magit-push)))
 ;; (define-key global-map [f11] 'switch-fullscreen)
 
   ;; Music
