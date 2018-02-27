@@ -630,7 +630,9 @@ mouse-3: Next buffer")
    (ceylon-format-region . tab-width)))
 (smart-tabs-add-language-support scala  scala-mode-hook
   ((scala-indent:indent-line . scala-indent:step)))
-(smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon 'scala ;; 'lua
+(smart-tabs-add-language-support rust   rust-mode-hook
+  ((rust-mode-indent-line . rust-indent-offset)))
+(smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon 'scala 'rust ;; 'lua
                       )
 
   ;; Scheme Shit
@@ -862,6 +864,9 @@ prefer for `sh-mode'.  It is automatically added to
   ;; Rust Shit
 ;; (require 'rusti)
 ;; (setq rusti-program "~/.cargo/bin/rust-repl")
+(add-to-list 'auto-mode-alist '("\\.toml\\'" . conf-mode))
+
+(require 'rust-repl)
 
 (defun rust-new (exec? name)
   (interactive (list
@@ -1174,6 +1179,23 @@ prefer for `sh-mode'.  It is automatically added to
 (global-set-key (kbd "C-x v v") 'vc-next-action-new)
 (put 'dired-find-alternate-file 'disabled nil)
 
+(setq magit-display-buffer-function (lambda (buffer)
+                                      (display-buffer
+                                        buffer
+                                        (if (and
+                                              (derived-mode-p 'magit-mode)
+                                              (memq
+                                                (with-current-buffer buffer major-mode)
+                                                '(magit-process-mode
+                                                  magit-revision-mode
+                                                  magit-diff-mode
+                                                  magit-stash-mode
+                                                  magit-status-mode)))
+                                            nil
+                                          '(display-buffer-same-window)))))
+(global-set-key (kbd "C-x m") 'magit-status)
+;; (define-key global-map [f11] 'switch-fullscreen)
+
   ;; Music
 (defun unnecessary-yt ()
   (interactive)
@@ -1205,7 +1227,18 @@ prefer for `sh-mode'.  It is automatically added to
               (read-string (concat "Title (default `" uri "'): ") nil nil uri)))
           (helm-youtube)))
       (helm-youtube))))
-(global-set-key (kbd "C-c b y") 'unnecessary-yt)
+(global-set-key (kbd "C-c b y")   'unnecessary-yt)
+(global-set-key (kbd "C-c b b")   'bongo)
+(global-set-key (kbd "C-c b SPC") 'bongo-pause/resume)
+(add-hook 'bongo-mode-hook (lambda ()
+                             (define-key bongo-mode-map (kbd "RET")
+                               (lambda ()
+                                 (interactive)
+
+                                 (condition-case err
+                                     (bongo-set-backend-for-track 'vlc)
+                                   (lambda () 1))
+                                 (bongo-dwim)))))
 
 
 
@@ -1218,7 +1251,13 @@ prefer for `sh-mode'.  It is automatically added to
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(company-tooltip ((t (:foreground "white"))))
- '(company-tooltip-selection ((t (:background "green" :foreground "black")))))
+ '(company-tooltip-selection ((t (:background "green" :foreground "black"))))
+ '(magit-diff-added ((t (:background "green" :foreground "white"))))
+ '(magit-diff-added-highlight ((t (:background "green" :foreground "white"))))
+ '(magit-diff-context-highlight ((t (:foreground "grey50"))))
+ '(magit-diff-removed ((t (:background "#aa2222" :foreground "white"))))
+ '(magit-diff-removed-highlight ((t (:background "#aa2222" :foreground "white"))))
+ '(magit-section-highlight ((t (:background "black")))))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
