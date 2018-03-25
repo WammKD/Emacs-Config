@@ -681,7 +681,11 @@ If there is a process already running in `* Guile REPL *', switch to that buffer
                                       "if/return" "provide"
                                       "require"   "unless"
                                       "when"      "with-handlers"))
+                              (hs-minor-mode t)
+                              (local-set-key (kbd "C-x g f") 'hs-hide-block)
+                              (local-set-key (kbd "C-x g s") 'hs-show-block)
                               (geiser-mode t)
+                              (company-mode nil)
                               (auto-complete-mode t)
                               (ac-geiser-setup)))
 
@@ -1283,4 +1287,4 @@ prefer for `sh-mode'.  It is automatically added to
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(geiser-guile-extra-keywords (quote ("if-let"))))
