@@ -120,6 +120,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (setq version-control                 t)   ; Use version numbers on backups
 (setq kept-new-versions               20)  ; how many of the newest versions to keep
 (setq kept-old-versions               5)   ; and how many of the old
+(setq delete-old-versions             t)
 
 (put 'upcase-region   'disabled nil)
 (put 'downcase-region 'disabled nil)
@@ -669,7 +670,7 @@ If there is a process already running in `* Guile REPL *', switch to that buffer
 
   (geiser 'racket))
 
-(global-set-key (kbd "C-M-r") 'run-guile)
+(global-set-key (kbd "C-x g r") 'run-guile)
 (add-hook 'scheme-mode-hook (lambda ()
                               (setq indent-tabs-mode nil)
                               (when (string-equal
@@ -1287,4 +1288,4 @@ prefer for `sh-mode'.  It is automatically added to
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(geiser-guile-extra-keywords (quote ("if-let"))))
+ '(geiser-guile-extra-keywords (quote ("return-if" "if-let"))))
