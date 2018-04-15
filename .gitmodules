@@ -1,0 +1,3 @@
+[submodule "emacs-klere-theme"]
+	path = themes/emacs-klere-theme
+	url = https://github.com/WammKD/emacs-klere-theme.git
