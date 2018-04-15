@@ -1,6 +1,7 @@
 ;; Loadpaths
 (add-to-list 'load-path              "~/.emacs.d/lisp")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-klere-theme")
 
 ;; Packages
 (require 'package)
@@ -608,7 +609,7 @@ mouse-3: Next buffer")
 
 (defun on-after-init ()
   (when (display-graphic-p (selected-frame))
-    (load-theme 'klere2 t)))
+    (load-theme 'klere t)))
 (add-hook 'window-setup-hook 'on-after-init)
 
 ;; Tramp Shit
