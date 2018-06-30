@@ -328,13 +328,15 @@ mouse-1: Display Line and Column Mode Menu"
                                                     vc-mode
                                                     "[:-]")) "-")))
               (concat
-                (propertize (format " %s" (all-the-icons-alltheicon "git"))
-                            'face `(:height 0.9) 'display '(raise -0.1))
-                " · "
+                " "
+                (propertize (format "  %s" (all-the-icons-alltheicon "git"))
+                            'face `(:background "#007bb3" :height 0.9) 'display '(raise -0.1))
+                (propertize " · "
+                            'face `(:background "#007bb3"))
                 (propertize (format "%s" (all-the-icons-octicon "git-branch"))
-                            'face `(:height 1.0 :family ,(all-the-icons-octicon-family))
+                            'face `(:background "#007bb3" :height 1.0 :family ,(all-the-icons-octicon-family))
                             'display '(raise -0.1))
-                (propertize (format " %s" branch) 'face `(:height 0.9)))))
+                (propertize (format " %s  " branch) 'face `(:background "#007bb3" :height 0.9)))))
           (defun -custom-modeline-svn-vc ()
             (let ((revision (cadr (split-string vc-mode "-"))))
               (concat
@@ -383,9 +385,9 @@ mouse-3: Next buffer")
                                                 "  "
                                                 (:eval (custom-modeline-region-info))
                                                 "  "
+                                                mode-line-modes
                                                 (:eval (custom-modeline-icon-vc))
                                                 "  "
-                                                mode-line-modes
                                                 mode-line-misc-info
                                                 mode-line-end-spaces)))
       (defun custom-mode-line-position ()
@@ -767,15 +769,20 @@ Leave point after open-paren."
 ; I'm putting this here in event that I add a QML mode, again
 ;; (autoload 'qml-mode "qml-mode")
 ;; (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
-;; (defun qml-mode-setup-folding ()
-;;   (local-set-key (kbd "C-x w f") 'hs-hide-block)
-;;   (local-set-key (kbd "C-x w s") 'hs-show-block)
-;;   (local-set-key (kbd "C-x w i") 'qml-add-import)
-;;   (local-set-key (kbd "C-M-SPC") 'qml-mark-defun)
+(defun qml-mode-setup-folding ()
+  (hs-minor-mode)
+  (company-mode)
+  (add-to-list 'company-backends 'company-qml)
 
-;;   (setq-local js-indent-level 2)
-;;   (setq-local css-indent-offset 2))
-;; (add-hook 'qml-mode-hook 'qml-mode-setup-folding)
+  (local-set-key (kbd "C-x w f") 'hs-hide-block)
+  (local-set-key (kbd "C-x w s") 'hs-show-block)
+  (local-set-key (kbd "C-x w i") 'qml-add-import)
+  (local-set-key (kbd "C-M-SPC") 'qml-mark-defun)
+
+  (setq-local  js-indent-level  2)
+  (setq-local css-indent-offset 2)
+  (setq-local indent-tabs-mode  nil))
+(add-hook 'qml-mode-hook 'qml-mode-setup-folding)
 
   ;; Web Shit
 (add-to-list 'auto-mode-alist '("\\.js\\'"        . web-mode))
