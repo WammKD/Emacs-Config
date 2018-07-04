@@ -732,6 +732,7 @@ If there is a process already running in `* Guile REPL *', switch to that buffer
 
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
+
 (defun my-scratch-flyspell-mode ()
   (interactive)
 
@@ -740,7 +741,8 @@ If there is a process already running in `* Guile REPL *', switch to that buffer
 (add-hook 'after-init-hook 'my-scratch-flyspell-mode)
 
     ;; LaTeX Shit
-; Make sure to install auctex for any of this to work
+; Make sure to install auctex (and texlive if installing auctex through the
+; Emacs package manager) for any of this to work
 (defun LaTeX-insert-pair (&optional arg)
   "Enclose following ARG sexps in LaTeX quotations (`` and '').
 Leave point after open-paren."
