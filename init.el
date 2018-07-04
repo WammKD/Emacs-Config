@@ -23,29 +23,6 @@
   (when (< emacs-major-version 24)
     (add-to-list 'package-archives (cons "gnu" gnuURL))))
 
-(defconst packagesList "~/.emacs.d/packages.txt"
-  "The file location/name of where the package list is stored.")
-
-(defun save-packages ()
-  (with-temp-file packagesList
-    (insert (format "%S" package-activated-list))))
-; keep package-sync-list up to date when exiting emacs
-(add-hook 'kill-emacs-hook 'save-packages)
-
-(defun require-package (package)
-  "Install given PACKAGE. This is from Bling's config"
-  (unless (package-installed-p package)
-    (unless (assoc package package-archive-contents)
-      (package-refresh-contents))
-
-    (package-install package)))
-(with-eval-after-load "package.el"
-  (mapc
-    'require-package
-    (car (read-from-string (with-temp-buffer
-                             (insert-file-contents packagesList)
-                             (buffer-string))))))
-
 ;; (auto-package-update-maybe)
 
 (global-set-key (kbd "C-x p l") 'list-packages)
