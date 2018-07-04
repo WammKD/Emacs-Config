@@ -27,7 +27,17 @@
 
 (global-set-key (kbd "C-x p l") 'list-packages)
 
+
 ;; Emacs Shit
+  ;; Backups and Shit
+(setq desktop-dirname                "~/.emacs.d/desktops")
+(setq backup-directory-alist         '(("." . "~/.emacs.d/backup")))
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosave/\\1" t)))
+(setq version-control                t)   ; Use version numbers on backups
+(setq kept-new-versions              20)  ; how many of the newest versions to keep
+(setq kept-old-versions              5)   ; and how many of the old
+(setq delete-old-versions            t)
+
 (load-file "~/.emacs.d/lisp/cursors.el")
 (delete-selection-mode t)
 (add-hook      'after-init-hook (lambda ()
@@ -101,11 +111,6 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (setq browse-url-browser-function     'browse-url-qutebrowser)
 (setq column-number-mode              t)
 (setq scroll-preserve-screen-position t)
-(setq backup-directory-alist          '(("." . "~/.emacs.d/backup")))
-(setq version-control                 t)   ; Use version numbers on backups
-(setq kept-new-versions               20)  ; how many of the newest versions to keep
-(setq kept-old-versions               5)   ; and how many of the old
-(setq delete-old-versions             t)
 
 (put 'upcase-region   'disabled nil)
 (put 'downcase-region 'disabled nil)
