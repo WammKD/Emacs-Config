@@ -1002,7 +1002,7 @@ prefer for `sh-mode'.  It is automatically added to
     ;; Java Shit
 (eval-after-load 'javadoc-lookup
   (lambda ()
-    (javadoc-add-roots "/usr/lib/jvm/java-8-openjdk-amd64/docs/api/")
+    (javadoc-add-roots "/usr/lib/jvm/java-11-openjdk-amd64/docs/api/")
     ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api")
     ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api-junit")
     ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api-javaslang")
