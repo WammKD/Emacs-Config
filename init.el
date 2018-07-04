@@ -1302,7 +1302,7 @@ prefer for `sh-mode'.  It is automatically added to
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit)))
+    (dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit)))
  '(geiser-guile-extra-keywords (quote ("return-if" "if-let"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
