@@ -214,20 +214,21 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "C-x 3") 'hsplit-last-buffer)
 
   ;; Display Shit
-(defun switch-fullscreen nil
-  (interactive)
+(when (display-graphic-p)
+  (defun switch-fullscreen nil
+    (interactive)
 
-  (let* ((modes '(nil fullboth))
-         (cm    (cdr (assoc 'fullscreen (frame-parameters))))
-         (nl    (if cm 1 -1))
-         (next  (cadr (member cm modes))))
-    (menu-bar-mode nl)
-    (tool-bar-mode nl)
-    (modify-frame-parameters
-      (selected-frame)
-      (list (cons 'fullscreen next)))))
+    (let* ((modes '(nil fullboth))
+           (cm    (cdr (assoc 'fullscreen (frame-parameters))))
+           (nl    (if cm 1 -1))
+           (next  (cadr (member cm modes))))
+      (menu-bar-mode nl)
+      (tool-bar-mode nl)
+      (modify-frame-parameters
+        (selected-frame)
+        (list (cons 'fullscreen next)))))
 
-(define-key global-map [f11] 'switch-fullscreen)
+  (define-key global-map [f11] 'switch-fullscreen))
 
   ;; Games Shit
     ;; Tetris Shit
