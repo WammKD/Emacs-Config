@@ -1264,21 +1264,19 @@ prefer for `sh-mode'.  It is automatically added to
         "1 sec"
         nil
         (lambda ()
-          (setq helm-youtube-key (with-temp-buffer
-                                   (insert-file-contents "~/.yt-helm")
-                                   (buffer-string)))
-          (defun helm-youtube-playvideo (video-id)
+          (setq ivy-youtube-key (with-temp-buffer
+                                  (insert-file-contents "~/.yt-helm")
+                                  (buffer-string)))
+          (defun ivy-youtube-playvideo (video-url)
             "Format the youtube URL via VIDEO-ID."
-            (setq uri (trim-string (shell-command-to-string
-                                     (concat
-                                       "youtube-dl -f140 -g "
-                                       "http://www.youtube.com/watch?v="
-                                       video-id))))
+            (setq uri (trim-string
+                        (shell-command-to-string
+                          (concat "youtube-dl -f140 -g " video-url))))
             (bongo-insert-uri
               uri
               (read-string (concat "Title (default `" uri "'): ") nil nil uri)))
-          (helm-youtube)))
-      (helm-youtube))))
+          (ivy-youtube)))
+      (ivy-youtube))))
 (global-set-key (kbd "C-c b y")   'unnecessary-yt)
 (global-set-key (kbd "C-c b b")   'bongo)
 (global-set-key (kbd "C-c b SPC") 'bongo-pause/resume)
