@@ -111,6 +111,15 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (setq browse-url-browser-function     'browse-url-qutebrowser)
 (setq column-number-mode              t)
 (setq scroll-preserve-screen-position t)
+(when (not (display-graphic-p))
+  ;; (require 'mwheel)
+  ;; (require 'mouse)
+  (xterm-mouse-mode t)
+  (mouse-wheel-mode t)
+
+  ;; (global-set-key [mouse-5] 'next-line)
+  ;; (global-set-key [mouse-4] 'previous-line)
+  )
 
 (put 'upcase-region   'disabled nil)
 (put 'downcase-region 'disabled nil)
@@ -156,7 +165,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key [?\C-c ?c] 'copy-to-clipboard)
 (global-set-key [?\C-c ?v] 'paste-from-clipboard)
 
-  ;; Eshell Shit
+  ;; Shell Shit
 (setq shell-file-name "bash")
 
   ;; Buffers Shit
