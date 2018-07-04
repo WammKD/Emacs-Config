@@ -646,6 +646,7 @@ mouse-3: Next buffer")
 (add-to-list 'tramp-remote-path                "/system/xbin")
 (add-to-list 'tramp-remote-process-environment "TMPDIR=$HOME")
 
+
 ;; Buffer Shit
   ; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
@@ -663,6 +664,7 @@ mouse-3: Next buffer")
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 (global-set-key (kbd "C-x M-w") 'rename-file-and-buffer)
+
 
 ;; Coding Shit?
 (require 'smart-tabs-mode)
@@ -687,7 +689,8 @@ mouse-3: Next buffer")
   ;; Scheme Shit
 (put 'if 'scheme-indent-function 2)
 
-(setq scheme-program-name "guile")
+(setq scheme-program-name   "guile")
+(setq geiser-mode-company-p nil)
 (defun run-guile ()
   "Run Guile via Geiser, input and output via buffer `* Guile REPL *'.
 If there is a process already running in `* Guile REPL *', switch to that buffer."
