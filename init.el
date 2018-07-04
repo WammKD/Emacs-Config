@@ -707,20 +707,23 @@ If there is a process already running in `* Guile REPL *', switch to that buffer
 (global-set-key (kbd "C-x g r") 'run-guile)
 (add-hook 'scheme-mode-hook (lambda ()
                               (setq indent-tabs-mode nil)
+
                               (when (string-equal
                                       "rkt"
                                       (file-name-extension (buffer-file-name)))
+                                (setq geiser-racket-extra-keywords
+                                      '("if-let"    "when-let"
+                                        "if/return" "provide"
+                                        "require"   "unless"
+                                        "when"      "with-handlers"))
+
                                 (racket-mode))
-                              (setq geiser-racket-extra-keywords
-                                    '("if-let"    "when-let"
-                                      "if/return" "provide"
-                                      "require"   "unless"
-                                      "when"      "with-handlers"))
+
                               (hs-minor-mode t)
                               (local-set-key (kbd "C-x g f") 'hs-hide-block)
                               (local-set-key (kbd "C-x g s") 'hs-show-block)
+
                               (geiser-mode t)
-                              (company-mode nil)
                               (auto-complete-mode t)
                               (ac-geiser-setup)))
 
