@@ -1302,7 +1302,8 @@ prefer for `sh-mode'.  It is automatically added to
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
+    (meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit)))
+ '(geiser-guile-extra-keywords (quote ("return-if" "if-let"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1316,9 +1317,3 @@ prefer for `sh-mode'.  It is automatically added to
  '(magit-diff-removed ((t (:background "#aa2222" :foreground "white"))))
  '(magit-diff-removed-highlight ((t (:background "#aa2222" :foreground "white"))))
  '(magit-section-highlight ((t (:background "black")))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(geiser-guile-extra-keywords (quote ("return-if" "if-let"))))
