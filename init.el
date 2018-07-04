@@ -1247,14 +1247,13 @@ prefer for `sh-mode'.  It is automatically added to
 
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
 (global-set-key (kbd "C-x m") 'magit-status)
-;; (define-key global-map [f11] 'switch-fullscreen)
 
   ;; Music
 (defun unnecessary-yt ()
   (interactive)
 
-  (if (boundp 'helm-youtube-key)
-      (helm-youtube)
+  (if (boundp 'ivy-youtube-key)
+      (ivy-youtube)
     (progn
       (run-at-time
         "1 sec"
