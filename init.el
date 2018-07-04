@@ -1245,24 +1245,8 @@ prefer for `sh-mode'.  It is automatically added to
 (global-set-key (kbd "C-x v v") 'vc-next-action-new)
 (put 'dired-find-alternate-file 'disabled nil)
 
-(setq magit-display-buffer-function (lambda (buffer)
-                                      (display-buffer
-                                        buffer
-                                        (if (and
-                                              (derived-mode-p 'magit-mode)
-                                              (memq
-                                                (with-current-buffer buffer major-mode)
-                                                '(magit-process-mode
-                                                  magit-revision-mode
-                                                  magit-diff-mode
-                                                  magit-stash-mode
-                                                  magit-status-mode)))
-                                            nil
-                                          '(display-buffer-same-window)))))
+(setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
 (global-set-key (kbd "C-x m") 'magit-status)
-(add-hook 'magit-mode-hook (lambda ()
-                             (local-set-key (kbd "C-c p") 'magit-pull)
-                             (local-set-key (kbd "C-c P") 'magit-push)))
 ;; (define-key global-map [f11] 'switch-fullscreen)
 
   ;; Music
