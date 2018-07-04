@@ -236,8 +236,9 @@ If there is a fill prefix, delete it from the beginning of the following line."
     ;; Snake Shit
 (setq  snake-score-file "~/.emacs.d/game_scores/snake-scores")
 
+
 ;; Theme Shit
-; Mode-line
+  ;; Mode-line
 (add-hook 'after-init-hook
   (lambda ()
     (if (display-graphic-p)
