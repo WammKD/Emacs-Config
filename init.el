@@ -614,19 +614,29 @@ mouse-3: Next buffer")
     (load-theme 'klere t)))
 (add-hook 'window-setup-hook 'on-after-init)
 
+
 ;; Tramp Shit
 (require 'tramp)
 
 (setq tramp-default-method "scp")
 (setq recentf-auto-cleanup 'never)
-(defadvice save-buffer (around save-buffer-as-root-around activate)
-  "Use sudo to save the current buffer."
-  (interactive "p")
 
-  (if (and (buffer-file-name) (not (file-writable-p (buffer-file-name))))
-      (let ((buffer-file-name (format "/sudo::%s" buffer-file-name)))
-        ad-do-it)
-    ad-do-it))
+(defun find-file-no-sudo ()
+  (interactive)
+
+  (find-file (read-file-name
+               "Find file: "
+               (if (string-match "^/sudo:root@localhost:" default-directory)
+                   (substring default-directory 21)
+                 default-directory))))
+(global-set-key (kbd "C-x C-f") 'find-file-no-sudo)
+
+(defadvice read-only-mode (after read-only-mode-sudo activate)
+  "Find file as root if necessary."
+  (when (and (buffer-file-name) (not (file-writable-p (buffer-file-name))))
+    (let ((p (point)))
+      (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))
+      (goto-char p))))
 
 (add-to-list 'tramp-connection-properties      (list
                                                  (regexp-quote "192.168.1.109")
