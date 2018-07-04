@@ -30,7 +30,7 @@
 
 ;; Emacs Shit
   ;; Backups and Shit
-(setq desktop-dirname                "~/.emacs.d/desktops")
+(setq desktop-dirname                "~/.emacs.d/desktop")
 (setq backup-directory-alist         '(("." . "~/.emacs.d/backup")))
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosave/\\1" t)))
 (setq version-control                t)   ; Use version numbers on backups
@@ -40,7 +40,7 @@
 
 (load-file "~/.emacs.d/lisp/cursors.el")
 (delete-selection-mode t)
-(add-hook      'after-init-hook (lambda ()
+(add-hook 'after-init-hook      (lambda ()
                                   (when (and
                                           (string= "*scratch*" (buffer-name))
                                           (not (buffer-file-name)))
