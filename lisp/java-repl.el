@@ -32,7 +32,7 @@
   "Major mode for java-repl"
   :group 'languages)
 
-(defcustom java-repl-command "jshell"
+(defcustom java-repl-command "javar"
   "The 'java-repl' command.  Invoke the 'java-repl' via a wrapper that execs.
 #!/usr/bin/env bash
 exec /usr/bin/java -jar $JAVAREPLPATH/bin/java-repl.jarlocalhost:java-repl
@@ -42,7 +42,7 @@ Customize this variable to point to the wrapper script."
   :group 'java-repl)
 
 ;;; Code:
-(defvar java-repl-file-path "/usr/bin/jshell"
+(defvar java-repl-file-path "/usr/local/bin/javar"
   "Path to the program used by `run-java-repl'.")
 ;
 (defvar java-repl-cli-arguments '()
@@ -55,7 +55,7 @@ Customize this variable to point to the wrapper script."
     map)
   "Basic mode map for `run-java-repl'.")
 ;
-(defvar java-repl-prompt-regexp "^\\(?:\\[[^@]+@[^@]+\\]\\)"
+(defvar java-repl-prompt-regexp "^java> " ;; "^\\(?:\\[[^@]+@[^@]+\\]\\)"
   "Prompt for `run-java-repl'.")
 ;
 (defun run-java ()
