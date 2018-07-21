@@ -1002,7 +1002,7 @@ prefer for `sh-mode'.  It is automatically added to
     ;; Java Shit
 (eval-after-load 'javadoc-lookup
   (lambda ()
-    (javadoc-add-roots "/usr/lib/jvm/java-11-openjdk-amd64/docs/api/")
+    (javadoc-add-roots "/usr/lib/jvm/java-8-openjdk-amd64/docs/api/")
     ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api")
     ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api-junit")
     ;; (javadoc-add-roots "/usr/local/java/jdk1.8.0_45/api-javaslang")
@@ -1136,6 +1136,13 @@ prefer for `sh-mode'.  It is automatically added to
   '(progn
      (add-to-list 'ac-modes 'cider-mode)
      (add-to-list 'ac-modes 'cider-repl-mode)))
+
+    ;; Kawa Shit
+(defun run-kawa ()
+  (interactive)
+
+  (async-shell-command "kawa" "*Kawa*")
+  (other-window 1))
 
     ;; Android Shit
 (setq android-mode-builder (quote gradle)
@@ -1300,10 +1307,10 @@ prefer for `sh-mode'.  It is automatically added to
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(geiser-guile-extra-keywords (quote ("return-if" "if-let")))
  '(package-selected-packages
    (quote
-    (dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit)))
- '(geiser-guile-extra-keywords (quote ("return-if" "if-let"))))
+    (racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1316,4 +1323,5 @@ prefer for `sh-mode'.  It is automatically added to
  '(magit-diff-context-highlight ((t (:foreground "grey50"))))
  '(magit-diff-removed ((t (:background "#aa2222" :foreground "white"))))
  '(magit-diff-removed-highlight ((t (:background "#aa2222" :foreground "white"))))
+ '(magit-hash ((t (:foreground "magenta"))))
  '(magit-section-highlight ((t (:background "black")))))
