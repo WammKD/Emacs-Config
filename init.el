@@ -126,6 +126,9 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (put 'upcase-region   'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+  ;; Search Shit
+(load-file "~/.emacs.d/lisp/globalff.el")
+
   ;; Window Shit
 (require 'window-size)
 
