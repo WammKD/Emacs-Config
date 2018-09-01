@@ -688,7 +688,17 @@ mouse-3: Next buffer")
   ((scala-indent:indent-line . scala-indent:step)))
 (smart-tabs-add-language-support rust   rust-mode-hook
   ((rust-mode-indent-line . rust-indent-offset)))
-(smart-tabs-insinuate 'c 'c++ 'java 'python 'ruby 'javascript 'ceylon 'scala 'rust ;; 'lua
+;; (add-hook     'ruby-mode-hook (lambda ()
+;;                                 (setq ruby-use-smie nil)))
+;; (add-hook 'enh-ruby-mode-hook (lambda ()
+;;                                 (setq ruby-use-smie nil)))
+;; (smart-tabs-add-language-support ruby   ruby-mode-hook
+;;   ;; ((ruby-indent-line . ruby-indent-level))
+;;   ((smie-indent-line . ruby-indent-level)))
+;; (smart-tabs-add-language-support enh-ruby enh-ruby-mode-hook
+;;   ((enh-ruby-indent-line . ruby-indent-level)))
+
+(smart-tabs-insinuate 'c 'c++ 'java 'python 'javascript 'ceylon 'scala 'rust ;; 'lua 'ruby 'enh-ruby
                       )
 
   ;; Scheme Shit
@@ -931,7 +941,8 @@ prefer for `sh-mode'.  It is automatically added to
 (add-hook 'enh-ruby-mode-hook (lambda ()
                                 (setq ruby-indent-level 2
                                       tab-width         2
-                                      indent-tabs-mode  t)))
+                                      ;; indent-tabs-mode  t
+                                      )))
 
   ;; Rust Shit
 ;; (require 'rusti)
