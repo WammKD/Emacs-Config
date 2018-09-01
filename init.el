@@ -920,6 +920,10 @@ prefer for `sh-mode'.  It is automatically added to
 (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
 ;; (add-hook    'enh-ruby-mode-hook 'ac-robe-setup)
 
+(eval-after-load 'auto-complete '(add-to-list 'ac-modes 'inf-ruby-mode))
+(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
+(add-hook 'inf-ruby-mode-hook 'auto-complete-mode)
+
 (defun ruby-send-region-custom ()
   (interactive)
   (setq cb (current-buffer))
@@ -1327,7 +1331,7 @@ prefer for `sh-mode'.  It is automatically added to
  '(geiser-guile-extra-keywords (quote ("return-if" "if-let")))
  '(package-selected-packages
    (quote
-    (flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
+    (ac-inf-ruby inf-ruby flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
