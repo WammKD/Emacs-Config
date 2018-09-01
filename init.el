@@ -921,6 +921,7 @@ prefer for `sh-mode'.  It is automatically added to
       (ruby-send-region (region-beginning) (region-end))
     (ruby-send-region (line-beginning-position) (line-end-position))))
 
+(add-hook 'enh-ruby-mode-hook 'flymake-ruby-load)
 (add-hook 'enh-ruby-mode-hook (lambda ()
                                 (local-set-key
                                   (kbd "C-x r e")
@@ -1315,7 +1316,7 @@ prefer for `sh-mode'.  It is automatically added to
  '(geiser-guile-extra-keywords (quote ("return-if" "if-let")))
  '(package-selected-packages
    (quote
-    (markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
+    (flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
