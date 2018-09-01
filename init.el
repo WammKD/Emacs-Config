@@ -920,6 +920,16 @@ prefer for `sh-mode'.  It is automatically added to
 (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
 ;; (add-hook    'enh-ruby-mode-hook 'ac-robe-setup)
 
+(add-hook 'enh-ruby-mode-hook (lambda ()
+                                (setq ruby-indent-level 2
+                                      tab-width         2
+                                      ;; indent-tabs-mode  t
+                                      )))
+
+; flymake
+(add-hook 'enh-ruby-mode-hook 'flymake-ruby-load)
+
+; inf settings
 (eval-after-load 'auto-complete '(add-to-list 'ac-modes 'inf-ruby-mode))
 (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
 (add-hook 'inf-ruby-mode-hook 'auto-complete-mode)
@@ -935,18 +945,12 @@ prefer for `sh-mode'.  It is automatically added to
       (ruby-send-region (region-beginning) (region-end))
     (ruby-send-region (line-beginning-position) (line-end-position))))
 
-(add-hook 'enh-ruby-mode-hook 'flymake-ruby-load)
 (add-hook 'enh-ruby-mode-hook (lambda ()
                                 (local-set-key
                                   (kbd "C-x r e")
                                   #'ruby-send-region-custom)))
 (add-hook 'enh-ruby-mode-hook (lambda ()
                                 (local-set-key (kbd "C-x r q") #'inf-ruby)))
-(add-hook 'enh-ruby-mode-hook (lambda ()
-                                (setq ruby-indent-level 2
-                                      tab-width         2
-                                      ;; indent-tabs-mode  t
-                                      )))
 
   ;; Rust Shit
 ;; (require 'rusti)
