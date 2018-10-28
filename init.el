@@ -1124,6 +1124,8 @@ prefer for `sh-mode'.  It is automatically added to
                                'javadoc-sort-imports)))
 (require 'java-repl)
 (global-set-key (kbd "C-x j r") 'run-java)
+(add-hook 'meghanada-mode-hook '(lambda ()
+                                  (flycheck-mode +1)))
 
     ;; Scala Shit
 (add-hook 'scala-mode-hook
