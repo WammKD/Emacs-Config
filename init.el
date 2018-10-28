@@ -796,6 +796,7 @@ If there is a process already running in `* Guile REPL *', switch to that buffer
                                 (racket-mode))
 
                               (hs-minor-mode t)
+                              (local-set-key (kbd "C-c SPC") 'align-let)
                               (local-set-key (kbd "C-x g f") 'hs-hide-block)
                               (local-set-key (kbd "C-x g s") 'hs-show-block)
 
