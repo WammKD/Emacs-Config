@@ -704,6 +704,63 @@ mouse-3: Next buffer")
                       )
 
   ;; Scheme Shit
+(defconst guile--matching-parens
+  '(( ?\( . ?\) )
+    ( ?\[ . ?\] )
+    ( ?\{ . ?\} )))
+
+(defun guile--ppss-string-p (xs)
+  "Non-‘nil’ if inside a string.
+More precisely, this is the character that will terminate the
+string, or ‘t’ if a generic string delimiter character should
+terminate it."
+  (elt xs 3))
+
+(defun guile--open-paren (back-func)
+  "Use BACK-FUNC to find an opening ( [ or { if any.
+BACK-FUNC should be something like #'backward-sexp or #'backward-up-list."
+  (save-excursion
+    (ignore-errors
+      (funcall back-func)
+      (let ((ch (char-after)))
+        (and (eq ?\( (char-syntax ch))
+             ch)))))
+
+(defun guile--self-insert (event)
+  "Simulate a `self-insert-command' of EVENT.
+
+Using this intead of `insert' allows self-insert hooks to run,
+which is important for things like `'electric-pair-mode'.
+
+A command using this should probably set its 'delete-selection
+property to t so that `delete-selection-mode' works:
+
+  (put 'guile-command 'delete-selection t)
+
+If necessary the value of the property can be a function, for
+example `guile--electric-pair-mode-not-active'."
+  (let ((last-command-event event))     ;set this for hooks
+    (self-insert-command (prefix-numeric-value nil))))
+
+(defun guile-insert-closing (&optional prefix)
+  "Insert a matching closing delimiter.
+
+With a prefix, insert the typed character as-is.
+
+This is handy if you're not yet using `paredit-mode',
+`smartparens-mode', or simply `electric-pair-mode' added in Emacs
+24.5."
+  (interactive "P")
+  (let* ((do-it (not (or prefix
+                         (and (string= "#\\"
+                                       (buffer-substring-no-properties
+                                        (- (point) 2) (point) )))
+                         (guile--ppss-string-p (syntax-ppss)))))
+         (open-char  (and do-it        (guile--open-paren #'backward-up-list)))
+         (close-pair (and open-char    (assq open-char guile--matching-parens)))
+         (close-char (and close-pair   (cdr close-pair))))
+    (guile--self-insert (or close-char last-command-event))))
+
 (put 'if 'scheme-indent-function 2)
 
 (setq scheme-program-name   "guile")
@@ -723,6 +780,8 @@ If there is a process already running in `* Guile REPL *', switch to that buffer
 
 (global-set-key (kbd "C-x g r") 'run-guile)
 (add-hook 'scheme-mode-hook (lambda ()
+                              (define-key scheme-mode-map (kbd ")")
+                                'guile-insert-closing)
                               (setq indent-tabs-mode nil)
 
                               (when (string-equal
