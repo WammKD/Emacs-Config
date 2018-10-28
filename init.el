@@ -1434,7 +1434,7 @@ prefer for `sh-mode'.  It is automatically added to
  '(geiser-guile-extra-keywords (quote ("return-if" "if-let")))
  '(package-selected-packages
    (quote
-    (ruby-end bundler projectile-rails robe ac-inf-ruby inf-ruby flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
+    (mastodon android-mode flycheck-pyflakes jedi align-let ruby-end bundler projectile-rails robe ac-inf-ruby inf-ruby flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
