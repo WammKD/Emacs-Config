@@ -948,10 +948,20 @@ Leave point after open-paren."
                       indent-tabs-mode              t)))))
 
   ;; Python Shit
+;; (global-flycheck-mode 1)
+;; (with-eval-after-load 'flycheck
+;;   (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
+
+(require 'flycheck-pyflakes)
 (add-hook 'python-mode-hook (lambda ()
-                              (setq python-indent-level 4
-                                    tab-width           4
-                                    indent-tabs-mode    t)))
+                              (jedi:setup)
+                              (setq python-indent-level  4
+                                    tab-width            4
+                                    indent-tabs-mode     t
+                                    jedi:complete-on-dot t)
+                              (jedi-mode t)
+                              ;; (flymake-python-pyflakes-load)
+                              (flycheck-mode t)))
 
   ;; Lua Shit
 (add-to-list        'auto-mode-alist '("\\.lua$" . lua-mode))
