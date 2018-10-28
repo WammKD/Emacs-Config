@@ -1257,6 +1257,11 @@ prefer for `sh-mode'.  It is automatically added to
     ;; Android Shit
 (setq android-mode-builder (quote gradle)
       android-mode-sdk-dir "~/Android/Sdk")
+(defun android-init ()
+  (interactive)
+
+  (call-interactively 'meghanada-mode)
+  (call-interactively 'android-mode))
 (defun android-global-create-project ()
   (interactive)
 
@@ -1264,6 +1269,15 @@ prefer for `sh-mode'.  It is automatically added to
   (call-interactively 'android-create-project))
 (global-set-key (kbd "C-x a C-f") 'android-global-create-project)
 (global-set-key (kbd "C-x a o s") 'android-logcat)
+
+(eval-after-load 'android-mode
+  (lambda ()
+    (add-hook 'android-mode-hook (lambda ()
+                                   (local-set-key (kbd "C-c a b") '(lambda ()
+                                                                     (interactive)
+                                                                     (android-gradle "build")))
+                                   (local-set-key (kbd "C-c l s") 'android-logcat-set-filter)
+                                   (local-set-key (kbd "C-c l c") 'android-logcat-clear-filter)))))
 
 ;; (eval-after-load 'android-mode
 ;;   (lambda ()
