@@ -13,12 +13,14 @@
 ;; Packages
 (require 'package)
 
-(let* ((http     (if (and
-                       (memq system-type '(windows-nt ms-dos))
-                       (not (gnutls-available-p))) "http" "https"))
-       (melpaURL (concat http "://melpa.org/packages/"))
-       (gnuURL   (concat http "://elpa.gnu.org/packages/")))
-  (add-to-list 'package-archives (cons "melpa" melpaURL) t)
+(let* ((http      (concat (if (and
+                                (memq system-type '(windows-nt ms-dos))
+                                (not (gnutls-available-p))) "http" "https") "://"))
+       (user42URL (concat http "download.tuxfamily.org/user42/elpa/packages/"))
+       (melpaURL  (concat http "melpa.org/packages/"))
+       (gnuURL    (concat http "elpa.gnu.org/packages/")))
+  (add-to-list 'package-archives (cons "melpa"   melpaURL) t)
+  (add-to-list 'package-archives (cons "user42" user42URL) t)
   ;; For important compatibility libraries like cl-lib
   (when (< emacs-major-version 24)
     (add-to-list 'package-archives (cons "gnu" gnuURL))))
@@ -959,6 +961,9 @@ prefer for `sh-mode'.  It is automatically added to
 (add-hook 'enh-ruby-mode-hook (lambda ()
                                 (local-set-key (kbd "C-x r q") #'inf-ruby)))
 
+    ;; Rails Shit
+(projectile-rails-global-mode)
+
   ;; Rust Shit
 ;; (require 'rusti)
 ;; (setq rusti-program "~/.cargo/bin/rust-repl")
@@ -1342,7 +1347,7 @@ prefer for `sh-mode'.  It is automatically added to
  '(geiser-guile-extra-keywords (quote ("return-if" "if-let")))
  '(package-selected-packages
    (quote
-    (robe ac-inf-ruby inf-ruby flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
+    (ruby-end bundler projectile-rails robe ac-inf-ruby inf-ruby flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
