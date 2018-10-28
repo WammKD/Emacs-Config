@@ -1096,7 +1096,8 @@ prefer for `sh-mode'.  It is automatically added to
                                 (setq c-basic-offset   4
                                       tab-width        4
                                       indent-tabs-mode t)))
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+;; (with-eval-after-load 'flycheck
+;;   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
   ;; C/C++/Java Shit
 (setq-default c-basic-offset 4)
