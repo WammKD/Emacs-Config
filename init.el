@@ -1379,6 +1379,16 @@ prefer for `sh-mode'.  It is automatically added to
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
 (global-set-key (kbd "C-x m") 'magit-status)
 
+(add-hook 'git-commit-setup-hook (lambda ()
+                                   (add-hook
+                                     'with-editor-post-finish-hook
+                                     #'(lambda (&rest _)
+                                         (let ((magit-diff-buffer-in-current-repo (magit-mode-get-buffer
+                                                                                    'magit-diff-mode)))
+                                           (kill-buffer magit-diff-buffer-in-current-repo)))
+                                     nil
+                                     t)))
+
   ;; Music
 (defun unnecessary-yt ()
   (interactive)
