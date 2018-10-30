@@ -1377,6 +1377,7 @@ prefer for `sh-mode'.  It is automatically added to
 (put 'dired-find-alternate-file 'disabled nil)
 
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+;; (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
 (global-set-key (kbd "C-x m") 'magit-status)
 
 (add-hook 'git-commit-setup-hook (lambda ()
