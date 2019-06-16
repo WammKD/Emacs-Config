@@ -1177,6 +1177,10 @@ prefer for `sh-mode'.  It is automatically added to
 
                              (when (bound-and-true-p android-mode)
                                (call-interactively 'meghanada-mode))
+
+                             (setq c-basic-offset   4
+                                   tab-width        4
+                                   indent-tabs-mode t)
 (require 'java-repl)
 (global-set-key (kbd "C-x j r") 'run-java)
 (add-hook 'meghanada-mode-hook '(lambda ()
