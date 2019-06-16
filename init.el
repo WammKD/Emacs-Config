@@ -18,12 +18,20 @@
                                 (not (gnutls-available-p))) "http" "https") "://"))
        (user42URL (concat http "download.tuxfamily.org/user42/elpa/packages/"))
        (melpaURL  (concat http "melpa.org/packages/"))
+       (stableURL (concat http "stable.melpa.org/packages/"))
        (gnuURL    (concat http "elpa.gnu.org/packages/")))
-  (add-to-list 'package-archives (cons "melpa"   melpaURL) t)
-  (add-to-list 'package-archives (cons "user42" user42URL) t)
+  (add-to-list 'package-archives (cons "melpa"         melpaURL) t)
+  (add-to-list 'package-archives (cons "melpa-stable" stableURL) t)
+  (add-to-list 'package-archives (cons "user42"       user42URL) t)
   ;; For important compatibility libraries like cl-lib
   (when (< emacs-major-version 24)
     (add-to-list 'package-archives (cons "gnu" gnuURL))))
+(setq package-archive-priorities '(;; ("marmalade"    .  50)
+                                   ("gnu"          . 100)
+                                   ("user42"       . 150)
+                                   ("melpa-stable" . 200)
+                                   ("melpa"        . 250)))
+(setq package-pinned-packages    '((ac-html . "melpa-stable")))
 
 ;; (auto-package-update-maybe)
 
@@ -955,8 +963,13 @@ Leave point after open-paren."
       (local-set-key (kbd "C-x w s") 'unnec2))
     (add-hook 'web-mode-hook 'web-mode-setup-folding)
 
+    (add-hook 'web-mode-hook 'auto-complete-mode)
     (add-hook 'web-mode-hook
               (lambda ()
+                (when (string-equal (file-name-extension
+                                      buffer-file-name)   "html")
+                  (ac-html-enable))
+
                 (setq web-mode-enable-auto-closing  t
                       web-mode-enable-auto-pairing  t
                       web-mode-style-padding        2
