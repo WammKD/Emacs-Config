@@ -1402,6 +1402,13 @@ prefer for `sh-mode'.  It is automatically added to
                              'gud-jdb-classpath
                              "~/Android/Sdk/platforms/android-24/android.jar")))
 
+  ;; SQL Shit
+(require 'ejc-sql)
+
+(add-hook 'ejc-sql-minor-mode-hook (lambda ()
+                                     (auto-complete-mode t)
+                                     (ejc-ac-setup)))
+
   ;; Version Control
 (defun vc-next-action-new ()
   (interactive)
