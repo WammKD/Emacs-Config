@@ -992,6 +992,12 @@ Leave point after open-paren."
                       tab-width                     2
                       indent-tabs-mode              t)))))
 
+  ;; Web Requests Shit
+(add-hook 'restclient-mode-hook (lambda ()
+                                  (company-mode)
+                                  (add-to-list 'company-backends 'company-restclient)))
+(add-to-list 'auto-mode-alist '("\\.restclient\\'" . restclient-mode))
+
   ;; Python Shit
 ;; (global-flycheck-mode 1)
 ;; (with-eval-after-load 'flycheck
