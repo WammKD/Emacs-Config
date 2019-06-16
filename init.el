@@ -1181,6 +1181,15 @@ prefer for `sh-mode'.  It is automatically added to
                              (setq c-basic-offset   4
                                    tab-width        4
                                    indent-tabs-mode t)
+
+                             (define-key java-mode-map (kbd "(")
+                               'self-insert-command)
+                             (define-key java-mode-map (kbd ")")
+                               'self-insert-command)
+                             (define-key java-mode-map (kbd ";")
+                               'self-insert-command)
+                             (define-key java-mode-map (kbd ",")
+                               'self-insert-command)))
 (require 'java-repl)
 (global-set-key (kbd "C-x j r") 'run-java)
 (add-hook 'meghanada-mode-hook '(lambda ()
