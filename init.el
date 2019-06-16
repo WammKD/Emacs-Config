@@ -1173,7 +1173,10 @@ prefer for `sh-mode'.  It is automatically added to
                              (define-key java-mode-map (kbd "C-x j i")
                                'javadoc-add-import)
                              (define-key java-mode-map (kbd "C-x j s")
-                               'javadoc-sort-imports)))
+                               'javadoc-sort-imports)
+
+                             (when (bound-and-true-p android-mode)
+                               (call-interactively 'meghanada-mode))
 (require 'java-repl)
 (global-set-key (kbd "C-x j r") 'run-java)
 (add-hook 'meghanada-mode-hook '(lambda ()
