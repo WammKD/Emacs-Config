@@ -910,6 +910,7 @@ Leave point after open-paren."
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'"    . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css\\'"       . web-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'"      . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\'"       . web-mode))
 
 (eval-after-load 'web-mode
   (lambda ()
