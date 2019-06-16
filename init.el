@@ -124,10 +124,12 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "C-c m ! <")  'mc/unmark-previous-like-this)
 (global-set-key (kbd "C-c m SPC")  'set-rectangular-region-anchor)
 
-(define-key calendar-mode-map (kbd "f") 'calendar-forward-day)
-(define-key calendar-mode-map (kbd "b") 'calendar-backward-day)
-(define-key calendar-mode-map (kbd "n") 'calendar-forward-week)
-(define-key calendar-mode-map (kbd "p") 'calendar-backward-week)
+(eval-after-load 'calendar
+  (lambda ()
+    (define-key calendar-mode-map (kbd "f") 'calendar-forward-day)
+    (define-key calendar-mode-map (kbd "b") 'calendar-backward-day)
+    (define-key calendar-mode-map (kbd "n") 'calendar-forward-week)
+    (define-key calendar-mode-map (kbd "p") 'calendar-backward-week)))
 
 (setq browse-url-browser-function     'browse-url-qutebrowser)
 (setq column-number-mode              t)
