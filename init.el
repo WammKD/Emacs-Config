@@ -1153,6 +1153,7 @@ prefer for `sh-mode'.  It is automatically added to
   ;; C/C++/Java Shit
 (setq-default c-basic-offset 4)
 (add-hook 'c-initialization-hook (lambda ()
+                                   (local-set-key (kbd "C-c SPC") 'align)
                                    (setq c-basic-offset   4
                                          tab-width        4
                                          indent-tabs-mode t)))
