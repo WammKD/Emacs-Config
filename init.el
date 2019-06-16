@@ -958,9 +958,11 @@ Leave point after open-paren."
     (add-hook 'web-mode-hook
               (lambda ()
                 (setq web-mode-enable-auto-closing  t
+                      web-mode-enable-auto-pairing  t
                       web-mode-style-padding        2
                       web-mode-markup-indent-offset 2
                       ;; web-mode-attr-indent-offset   2  ; Html attribute indentation level
+                      web-mode-script-padding       2
                       web-mode-code-indent-offset   2
                       web-mode-css-indent-offset    2
                       ;; web-mode-sql-indent-offset    2  ; Sql (inside strings) indentation level
