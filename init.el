@@ -1193,7 +1193,10 @@ prefer for `sh-mode'.  It is automatically added to
 (require 'java-repl)
 (global-set-key (kbd "C-x j r") 'run-java)
 (add-hook 'meghanada-mode-hook '(lambda ()
-                                  (flycheck-mode +1)))
+                                  (flycheck-mode +1)
+                                  (setq c-basic-offset   4
+                                        tab-width        4
+                                        indent-tabs-mode t)))
 
     ;; Scala Shit
 (add-hook 'scala-mode-hook
