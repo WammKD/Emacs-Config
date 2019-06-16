@@ -963,6 +963,16 @@ Leave point after open-paren."
       (local-set-key (kbd "C-x w s") 'unnec2))
     (add-hook 'web-mode-hook 'web-mode-setup-folding)
 
+    (defun setup-ac-for-web-mode ()
+      (add-to-list 'web-mode-ac-sources-alist '("html" . (ac-source-html-attribute-value
+                                                          ac-source-html-tag
+                                                          ac-source-html-attribute
+                                                          ac-source-words-in-buffer
+                                                          ac-source-abbrev)))
+      (add-to-list 'web-mode-ac-sources-alist '("css"  . (ac-source-css-property))))
+
+    (add-to-list 'ac-modes 'web-mode)
+    (add-hook 'web-mode-before-auto-complete-hooks 'setup-ac-for-web-mode)
     (add-hook 'web-mode-hook 'auto-complete-mode)
     (add-hook 'web-mode-hook
               (lambda ()
