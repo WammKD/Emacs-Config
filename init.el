@@ -111,6 +111,13 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "M-\-")       'abbrev-prefix-mark)
 (global-set-key (kbd "C-x M-r")    'revert-buffer-no-confirm)
 (global-set-key [f7]               'ispell)
+(global-set-key (kbd "C-c d")      'dictionary-search)
+(global-set-key (kbd "C-c C")      'calendar)
+
+(define-key calendar-mode-map (kbd "f") 'calendar-forward-day)
+(define-key calendar-mode-map (kbd "b") 'calendar-backward-day)
+(define-key calendar-mode-map (kbd "n") 'calendar-forward-week)
+(define-key calendar-mode-map (kbd "p") 'calendar-backward-week)
 
 (setq browse-url-browser-function     'browse-url-qutebrowser)
 (setq column-number-mode              t)
