@@ -40,7 +40,17 @@
 
 ;; Emacs Shit
   ;; Eshell Shit
-(global-set-key (kbd "C-x e") 'eshell)
+(defun eshell-or-new-session (&optional arg)
+  "Create an interactive Eshell buffer.
+If there is already an Eshell session active, switch to it.
+If current buffer is already an Eshell buffer, create a new one and switch to it.
+See `eshell' for the numeric prefix ARG."
+  (interactive "P")
+
+  (if (eq major-mode 'eshell-mode)
+      (eshell (or arg t))
+    (eshell arg)))
+(global-set-key (kbd "C-x e") 'eshell-or-new-session)
   ;; Backups and Shit
 (setq desktop-dirname                "~/.emacs.d/desktop")
 (setq backup-directory-alist         '(("." . "~/.emacs.d/backup")))
