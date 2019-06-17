@@ -3,7 +3,8 @@ auto-save-list
 autosave
 backup
 desktop
-eshell
+eshell/history
+eshell/lastdir
 tramp
 url
 transient
