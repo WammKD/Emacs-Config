@@ -51,6 +51,9 @@ See `eshell' for the numeric prefix ARG."
       (eshell (or arg t))
     (eshell arg)))
 (global-set-key (kbd "C-x e") 'eshell-or-new-session)
+
+(defconst number-to-string-approx-suffixes
+  '("k" "M" "G" "T" "P" "E" "Z" "Y"))
   ;; Backups and Shit
 (setq desktop-dirname                "~/.emacs.d/desktop")
 (setq backup-directory-alist         '(("." . "~/.emacs.d/backup")))
@@ -1412,6 +1415,13 @@ prefer for `sh-mode'.  It is automatically added to
                              'gud-jdb-classpath
                              "~/Android/Sdk/platforms/android-24/android.jar")))
 
+  ;; Elixir Shit
+(add-hook 'elixir-mode-hook (lambda ()
+                              (company-mode)
+                              (alchemist-mode)
+                              (setq company-backends '((alchemist-company :with company-yasnippet)))
+                              (flymake-elixir-load)))
+
   ;; SQL Shit
 (require 'ejc-sql)
 
@@ -1467,6 +1477,10 @@ prefer for `sh-mode'.  It is automatically added to
 ;; (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
 (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
 (global-set-key (kbd "C-x m") 'magit-status)
+(global-set-key (kbd "C-x M") (lambda (git-directory)
+                                (interactive (list (read-directory-name "Git repository: ")))
+
+                                (magit git-directory)))
 
 (add-hook 'git-commit-setup-hook (lambda ()
                                    (add-hook
@@ -1535,7 +1549,7 @@ prefer for `sh-mode'.  It is automatically added to
     ("return-if" "if-let" "if-let*" "if-let-helper" "process-user-account-as" "if-activityStream")))
  '(package-selected-packages
    (quote
-    (ac-html web-completion-data mines minesweeper 2048-game circe-notifications circe company-restclient restclient ejc-sql multiple-cursors dockerfile-mode docker-compose-mode flymake-elixir alchemist mvn mastodon android-mode flycheck-pyflakes jedi align-let ruby-end bundler projectile-rails robe ac-inf-ruby inf-ruby flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
+    (pianobar ac-html web-completion-data mines minesweeper 2048-game circe-notifications circe company-restclient restclient ejc-sql multiple-cursors dockerfile-mode docker-compose-mode flymake-elixir alchemist mvn mastodon android-mode flycheck-pyflakes jedi align-let ruby-end bundler projectile-rails robe ac-inf-ruby inf-ruby flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
