@@ -184,19 +184,12 @@ If there is a fill prefix, delete it from the beginning of the following line."
         (call-interactively 'clipboard-kill-ring-save))
     (if (region-active-p)
         (progn
-          ;; (shell-command-on-region (region-beginning) (region-end) "gpaste add ")
           (shell-command (concat
-                           "gpaste-client add \""
-                           (replace-regexp-in-string
-                             "`"
-                             "\\\\`"
-                             (replace-regexp-in-string
-                               "\""
-                               "\\\\\""
-                               (buffer-substring-no-properties
-                                 (region-beginning)
-                                 (region-end))))
-                           "\""))
+                           "printf "
+                           (shell-quote-argument (buffer-substring-no-properties
+                                                   (region-beginning)
+                                                   (region-end)))
+                           " | xsel -bi"))
           (message "Yanked region to clipboard!")
           (deactivate-mark))
       (message "No region active; can't yank to clipboard!"))))
