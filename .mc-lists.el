@@ -3,8 +3,13 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        backward-sexp
+        forward-sexp
         guile-insert-closing
         indent-for-tab-command
+        insert-pair
+        insert-parentheses
+        insert-square-brackets
         kill-region
         ))
 
