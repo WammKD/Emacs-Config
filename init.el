@@ -83,6 +83,19 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun chomp (str)
   "Chomp leading and tailing whitespace from STR."
   (replace-regexp-in-string "\\(^[[:space:]\\n]*\\|[[:space:]\\n]*$\\)" "" str))
+(defun spacify ()
+  "Replace every character of region with spaces except for the newlines."
+  (interactive)
+
+  (when mark-active
+    (setq b (replace-regexp-in-string
+              "."
+              " "
+              (buffer-substring (region-beginning) (region-end))))
+
+    (delete-region (region-beginning) (region-end))
+
+    (insert b)))
   ;; Wrap highlighted text in pair
 (defun insert-square-brackets (&optional arg)
   "Enclose following ARG sexps in square brackets.
