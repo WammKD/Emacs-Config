@@ -1567,7 +1567,7 @@ prefer for `sh-mode'.  It is automatically added to
     ("return-if" "if-let" "if-let*" "if-let-helper" "process-user-account-as" "if-activityStream")))
  '(package-selected-packages
    (quote
-    (pianobar ac-html web-completion-data mines minesweeper 2048-game circe-notifications circe company-restclient restclient ejc-sql multiple-cursors dockerfile-mode docker-compose-mode flymake-elixir alchemist mvn mastodon android-mode flycheck-pyflakes jedi align-let ruby-end bundler projectile-rails robe ac-inf-ruby inf-ruby flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
+    (csv-mode pianobar ac-html web-completion-data mines minesweeper 2048-game circe-notifications circe company-restclient restclient ejc-sql multiple-cursors dockerfile-mode docker-compose-mode flymake-elixir alchemist mvn mastodon android-mode flycheck-pyflakes jedi align-let ruby-end bundler projectile-rails robe ac-inf-ruby inf-ruby flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
