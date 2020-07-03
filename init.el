@@ -213,7 +213,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
       (progn
         (clipboard-yank)
         (message "graphics active"))
-    (insert (shell-command-to-string "gpaste-client get 0"))))
+    (insert (shell-command-to-string "xsel -b"))))
 
 (global-set-key [?\C-c ?c] 'copy-to-clipboard)
 (global-set-key [?\C-c ?v] 'paste-from-clipboard)
