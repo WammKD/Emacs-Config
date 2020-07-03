@@ -1,4 +1,5 @@
-alias grep  grep --color=always $*
-alias lsd   ls -Ap1  $* | grep /
-alias lsde  ls -Alh  $* | grep ^d
-alias lsds  ls -p1   $*	| grep /
+alias la   ls -A $*
+alias lsds ls -p1   $* | grep /
+alias lsde ls -Alh  $* | grep ^d
+alias lsd  ls -Ap1  $* | grep /
+alias grep grep --color=always $*
