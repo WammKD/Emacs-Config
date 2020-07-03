@@ -927,6 +927,9 @@ Leave point after open-paren."
   (setq-local indent-tabs-mode  nil))
 (add-hook 'qml-mode-hook 'qml-mode-setup-folding)
 
+  ;; Ubuntu Touch Shit
+(load-file "~/.emacs.d/lisp/ubuntu-touch-development-mode.el")
+
   ;; Web Shit
 (add-to-list 'auto-mode-alist '("\\.js\\'"        . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'"       . web-mode))
