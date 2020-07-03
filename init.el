@@ -807,8 +807,9 @@ This is handy if you're not yet using `paredit-mode',
          (close-char (and close-pair   (cdr close-pair))))
     (guile--self-insert (or close-char last-command-event))))
 
-(put 'if     'scheme-indent-function 2)
-(put 'if-let 'scheme-indent-function 2)
+(put 'if      'scheme-indent-function 2)
+(put 'if-let  'scheme-indent-function 2)
+(put 'if-let* 'scheme-indent-function 2)
 
 (setq scheme-program-name   "guile")
 (setq geiser-mode-company-p nil)
