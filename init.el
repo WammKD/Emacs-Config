@@ -997,9 +997,18 @@ Leave point after open-paren."
     (add-hook 'web-mode-hook 'auto-complete-mode)
     (add-hook 'web-mode-hook
               (lambda ()
-                (when (string-equal (file-name-extension
-                                      buffer-file-name)   "html")
+                (when (or
+                        (string-equal (file-name-extension
+                                        buffer-file-name)   "html")
+                        (string-equal (file-name-extension
+                                        buffer-file-name)   "tpl"))
                   (ac-html-enable))
+
+                ;; (when (string-equal (file-name-extension
+                ;;                       buffer-file-name)   "php")
+                ;;   (require 'company-php)
+                ;;   (company-mode t)
+                ;;   (add-to-list 'company-backends 'company-ac-php-backend))
 
                 (setq web-mode-enable-auto-closing  t
                       web-mode-enable-auto-pairing  t
