@@ -1,8 +1,12 @@
 (defconst ut-compile-buffer        "*Ubuntu Touch Program*"
   "The name of the buffer where output from compiling or running a Ubuntu Touch project goes.")
+(defconst ut-logs-buffer           "*Ubuntu Touch Logs*"
+  "The name of the buffer where output from the logs of the running Ubuntu Touch app. goes.")
 (setq     same-window-buffer-names (cons
-                                     ut-compile-buffer
-                                     same-window-buffer-names))
+                                     ut-logs-buffer
+                                     (cons
+                                       ut-compile-buffer
+                                       same-window-buffer-names)))
 
 (defun ut-helper~buffer-size ()
   (floor (* .75 (window-height))))
@@ -25,14 +29,18 @@
         (get-buffer-process buffer))
     (progn
       (setq buffWin (get-buffer-window buffer))
-      (setq origSts (not (equal buffWin (get-buffer-window))))
+      (setq origWin (get-buffer-window))
 
-      (when (not buffWin)
-        (split-window-vertically winHeight))
+      (if buffWin
+          (select-window buffWin)
+        (split-window-vertically winHeight)
+        (other-window 1))
 
-      (when origSts (other-window 1))
       (async-shell-command command buffer)
-      (when origSts (other-window -1))
+
+      (if buffWin
+          (select-window origWin)
+        (other-window -1))
 
       (get-buffer-process buffer))))
 
@@ -70,4 +78,15 @@
                     default-directory)             "; clickable")
     (ut-helper~buffer-size)
     ut-compile-buffer
+    "An Ubuntu Touch process is currently running!"))
+
+(defun ut-log-project ()
+  (interactive)
+
+  (ut-start-compile
+    (concat "cd " (ut-helper~find-file-directory
+                    "^manifest.json\\(\\.in\\)*$"
+                    default-directory)             "; clickable logs")
+    (ut-helper~buffer-size)
+    ut-logs-buffer
     "An Ubuntu Touch process is currently running!"))
