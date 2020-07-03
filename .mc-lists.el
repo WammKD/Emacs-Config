@@ -11,6 +11,7 @@
         insert-parentheses
         insert-square-brackets
         kill-region
+        rectangle-mark-mode
         ))
 
 (setq mc/cmds-to-run-once
