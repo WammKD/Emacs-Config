@@ -1607,9 +1607,11 @@ prefer for `sh-mode'.  It is automatically added to
   ;; Elixir Shit
 (add-hook 'elixir-mode-hook (lambda ()
                               (company-mode)
+                              ;; (ac-alchemist-setup)
                               (alchemist-mode)
                               (setq company-backends '((alchemist-company :with company-yasnippet)))
-                              (flymake-elixir-load)))
+                              (flymake-elixir-load)
+                              (setq indent-tabs-mode nil)))
 
   ;; SQL Shit
 (require 'ejc-sql)
