@@ -301,6 +301,10 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "C-c m ! ,")  'mc/unmark-previous-like-this)
 (global-set-key (kbd "C-c m ! <")  'mc/unmark-previous-like-this)
 (global-set-key (kbd "C-c m SPC")  'set-rectangular-region-anchor)
+(global-set-key (kbd "C-x 8 l")    '(lambda ()
+                                      (interactive)
+
+                                      (insert-char (string-to-char "λ"))))
 
 (eval-after-load 'calendar
   (lambda ()
