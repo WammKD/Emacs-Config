@@ -818,8 +818,7 @@ mouse-3: Next buffer")
                                             mode-line-end-spaces)))))
 
 (defun on-after-init ()
-  (when (display-graphic-p (selected-frame))
-    (load-theme 'klere t)))
+  (load-theme 'klere t))
 (add-hook 'window-setup-hook 'on-after-init)
 
 
