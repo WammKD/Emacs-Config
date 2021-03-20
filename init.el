@@ -1672,6 +1672,8 @@ prefer for `sh-mode'.  It is automatically added to
                                 (interactive (list (read-directory-name "Git repository: ")))
 
                                 (magit git-directory)))
+(global-set-key (kbd "C-c m l") 'magit-log-buffer-file)
+(global-set-key (kbd "C-c m d") 'magit-diff-buffer-file)
 
 (add-hook 'git-commit-setup-hook (lambda ()
                                    (add-hook
