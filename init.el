@@ -1776,7 +1776,7 @@ prefer for `sh-mode'.  It is automatically added to
  ;; If there is more than one, they won't work right.
  '(geiser-guile-extra-keywords
    (quote
-    ("return-if" "if-let" "if-let*" "if-let-helper" "process-user-account-as" "if-activityStream" "generate-masto-object" "generate-masto-object-helper")))
+    ("return-if" "case-pred" "if-let" "if-let*" "if-let-helper" "process-user-account-as" "if-activityStream" "generate-masto-object" "generate-masto-object-helper" "insert-entity" "users-define" "auth-define" "main-define" "settings-define" "profiles-define" "search-define" "let/cc")))
  '(package-selected-packages
    (quote
     (ac-cider csv-mode pianobar ac-html web-completion-data mines minesweeper 2048-game circe-notifications circe company-restclient restclient ejc-sql multiple-cursors dockerfile-mode docker-compose-mode flymake-elixir alchemist mvn mastodon android-mode flycheck-pyflakes jedi align-let ruby-end bundler projectile-rails robe ac-inf-ruby inf-ruby flymake-ruby markdown-mode racer rust-mode racket-mode scheme-complete dictionary meghanada bongo ivy-youtube ceylon-mode javadoc-lookup enh-ruby-mode lua-mode web-mode qml-mode auctex ac-geiser geiser all-the-icons company magit))))
