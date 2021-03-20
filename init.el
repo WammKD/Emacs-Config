@@ -902,6 +902,8 @@ mouse-3: Next buffer")
 
 (smart-tabs-insinuate 'c 'c++ 'java 'python 'javascript 'ceylon 'scala 'rust ;; 'lua 'ruby 'enh-ruby
                       )
+; Delete tabs as single character
+(setq backward-delete-char-untabify-method nil)
 
   ;; Scheme Shit
 (defconst guile--matching-parens
