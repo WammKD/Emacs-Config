@@ -1623,6 +1623,22 @@ prefer for `sh-mode'.  It is automatically added to
                                      (auto-complete-mode t)
                                      (ejc-ac-setup)))
 
+(ejc-create-connection
+  "Swanye"
+  :classpath      (concat
+                    "~/.m2/repository/org/mariadb/jdbc/mariadb-java"
+                    "-client/1.1.7/mariadb-java-client-1.1.7.jar")
+  :connection-uri (concat
+                    "jdbc:mariadb://192.168.1.5:3306;"
+                    "databaseName=hubadub_elixir;"
+                    "user=judehub;"
+                    "password=jude;")
+  ;; :subprotocol "mariadb"
+  ;; :subname     "//192.168.1.5:3306/hubadub_elixir"
+  ;; :user        "judehub"
+  ;; :password    "jude"
+  )
+
   ;; Version Control
 (defun vc-next-action-new ()
   (interactive)
