@@ -4,16 +4,28 @@
 (setq mc/cmds-to-run-for-all
       '(
         backward-sexp
+        comint-delchar-or-maybe-eof
+        copy-to-clipboard
+        enh-ruby-backward-sexp
+        enh-ruby-forward-sexp
         forward-sexp
         guile-insert-closing
         indent-for-tab-command
+        insert-curly-braces
         insert-pair
         insert-parentheses
         insert-square-brackets
         kill-region
         rectangle-mark-mode
+        ruby-end-space
+        sql-magic-go
+        string-rectangle
+        xterm-paste
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        ido-switch-buffer
+        move-past-close-and-reindent
+        set-rectangular-region-anchor
         ))
