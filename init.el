@@ -287,6 +287,8 @@ If there is a fill prefix, delete it from the beginning of the following line."
 (global-set-key (kbd "M-\"")       'insert-pair)
 (global-set-key (kbd "M-'")        'insert-pair)
 (global-set-key (kbd "M-\-")       'abbrev-prefix-mark)
+(global-set-key (kbd "C-x C-SPC")  'rectangle-mark-mode)
+(global-set-key (kbd "C-x C-@")    'rectangle-mark-mode)
 (global-set-key (kbd "C-x M-r")    'revert-buffer-no-confirm)
 (global-set-key [f7]               'ispell)
 (global-set-key (kbd "C-c d")      'dictionary-search)
