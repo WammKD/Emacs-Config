@@ -1739,6 +1739,31 @@ prefer for `sh-mode'.  It is automatically added to
                                    (lambda () 1))
                                  (bongo-dwim)))))
 
+  ;; Writing
+(eval-after-load 'fountain-mode
+  (lambda ()
+    (setq fountain-export-command-profiles (cons
+                                             (cons
+                                               "screenplain"
+                                               "screenplain --strong %b %B.pdf")
+                                             fountain-export-command-profiles))
+
+    (add-hook 'fountain-mode-hook (lambda ()
+                                    ;; (local-set-key (kbd "C-c C-f") 'fountain-outline-cycle)
+                                    (local-set-key (kbd "C-c C-o") #'(lambda ()
+                                                                       (interactive)
+
+                                                                       (call-process-shell-command
+                                                                         (concat
+                                                                           "atril "
+                                                                           (substring
+                                                                             buffer-file-name
+                                                                             0
+                                                                             (- (length buffer-file-name) 8))
+                                                                           "pdf")
+                                                                         nil
+                                                                         0)))))))
+
 
 
 
