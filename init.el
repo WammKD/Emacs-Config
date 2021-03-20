@@ -1728,6 +1728,7 @@ prefer for `sh-mode'.  It is automatically added to
 (global-set-key (kbd "C-c b y")   'unnecessary-yt)
 (global-set-key (kbd "C-c b b")   'bongo)
 (global-set-key (kbd "C-c b SPC") 'bongo-pause/resume)
+(global-set-key (kbd "C-c b S")   'bongo-seek)
 (add-hook 'bongo-mode-hook (lambda ()
                              (define-key bongo-mode-map (kbd "RET")
                                (lambda ()
