@@ -1111,6 +1111,7 @@ Leave point after open-paren."
 
 (eval-after-load 'web-mode
   (lambda ()
+    (require 'auto-complete)
     ;; (setq web-mode-indent-style 2)
 
     (unless (display-graphic-p)
