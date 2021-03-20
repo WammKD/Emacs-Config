@@ -1114,12 +1114,12 @@ Leave point after open-paren."
     (require 'auto-complete)
     ;; (setq web-mode-indent-style 2)
 
-    (unless (display-graphic-p)
-      (set-face-attribute 'web-mode-html-tag-face nil         :foreground "blue3"   :weight 'bold)
-      (set-face-attribute 'web-mode-doctype-face nil          :foreground "#9FE55B" :weight 'bold)
-      (set-face-attribute 'web-mode-html-attr-name-face nil   :foreground "purple3")
-      (set-face-attribute 'web-mode-css-function-face nil     :foreground "purple3" :weight 'normal)
-      (set-face-attribute 'web-mode-css-pseudo-class-face nil :foreground "cyan3"   :weight 'normal))
+    ;; (unless (display-graphic-p)
+    ;;   (set-face-attribute 'web-mode-html-tag-face nil         :foreground "blue3"   :weight 'bold)
+    ;;   (set-face-attribute 'web-mode-doctype-face nil          :foreground "#9FE55B" :weight 'bold)
+    ;;   (set-face-attribute 'web-mode-html-attr-name-face nil   :foreground "purple3")
+    ;;   (set-face-attribute 'web-mode-css-function-face nil     :foreground "purple3" :weight 'normal)
+    ;;   (set-face-attribute 'web-mode-css-pseudo-class-face nil :foreground "cyan3"   :weight 'normal))
 
     (defun web-mode-setup-folding ()
       (let ((ext (file-name-extension (buffer-name))))
