@@ -212,6 +212,12 @@ See `eshell' for the numeric prefix ARG."
                                   (company-mode t)
                                   (setq indent-tabs-mode nil)))
 
+(eval-after-load 'grep
+  '(progn
+     (add-to-list 'grep-find-ignored-directories "node_modules")
+     (add-to-list 'grep-find-ignored-directories "_build")
+     (add-to-list 'grep-find-ignored-directories "deps")))
+
 (defun trim-string (string)
   "Remove white spaces in beginning and ending of STRING.
 White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
@@ -321,6 +327,7 @@ If there is a fill prefix, delete it from the beginning of the following line."
 
   ;; Search Shit
 (load-file "~/.emacs.d/lisp/globalff.el")
+(setq search-upper-case t)
 
   ;; Window Shit
 (require 'window-size)
