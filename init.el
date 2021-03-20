@@ -40,6 +40,144 @@
 
 ;; Emacs Shit
   ;; Eshell Shit
+;; (autoload 'bash-completion-dynamic-complete
+;;   \"bash-completion\"
+;;   \"BASH completion hook\")
+;; (add-hook 'shell-dynamic-complete-functions
+;;           'bash-completion-dynamic-complete)
+
+;; (defun bash-completion-from-eshell ()
+;;   (interactive)
+;;   (let ((completion-at-point-functions
+;;          '(bash-completion-eshell-capf)))
+;;     (completion-at-point)))
+
+;; (defun bash-completion-eshell-capf ()
+;;   (bash-completion-dynamic-complete-nocomint
+;;    (save-excursion (eshell-bol) (point))
+;;    (point) t))
+
+;;; sudo completion
+(defun pcomplete/sudo ()
+  "Completion rules for the `sudo' command."
+  (let ((pcomplete-ignore-case t))
+    (pcomplete-here (funcall pcomplete-command-completion-function))
+    (while (pcomplete-here (pcomplete-entries)))))
+
+;;;; systemctl completion
+(defcustom pcomplete-systemctl-commands
+  '("disable" "enable" "status" "start" "restart" "stop" "reenable"
+    "list-units" "list-unit-files")
+  "p-completion candidates for `systemctl' main commands"
+  :type '(repeat (string :tag "systemctl command"))
+  :group 'pcomplete)
+
+(defvar pcomplete-systemd-units
+  (split-string
+   (shell-command-to-string
+    "(systemctl list-units --all --full --no-legend;systemctl list-unit-files --full --no-legend)|while read -r a b; do echo \" $a\";done;"))
+  "p-completion candidates for all `systemd' units")
+
+(defvar pcomplete-systemd-user-units
+  (split-string
+   (shell-command-to-string
+    "(systemctl list-units --user --all --full --no-legend;systemctl list-unit-files --user --full --no-legend)|while read -r a b;do echo \" $a\";done;"))
+  "p-completion candidates for all `systemd' user units")
+
+(defun pcomplete/systemctl ()
+  "Completion rules for the `systemctl' command."
+  (pcomplete-here (append pcomplete-systemctl-commands '("--user")))
+  (cond ((pcomplete-test "--user")
+         (pcomplete-here pcomplete-systemctl-commands)
+         (pcomplete-here pcomplete-systemd-user-units))
+        (t (pcomplete-here pcomplete-systemd-units))))
+
+;;;; apt-get completion
+(defgroup pcmpl-apt-get nil
+  "Functions for dealing with APT-GET completions."
+  :group 'pcomplete)
+
+;; User Variables:
+
+(defcustom pcmpl-apt-get-binary (or (executable-find "apt-get") "apt-get")
+  "The full path of the 'apt-get' binary."
+  :type 'file
+  :group 'pcmpl-apt-get)
+
+;; Functions:
+
+;;;###autoload
+(defun pcomplete/apt-get ()
+  "Completion rules for the `apt-get' command."
+  (let ((pcomplete-help "(apt-get)Invoking APT-GET"))
+    (pcomplete-opt (pcmpl-apt-get-options))
+    (pcomplete-here* (pcmpl-apt-get-commands))
+    (cond ((or (pcomplete-test "remove")
+	       (pcomplete-test "autoremove")
+	       (pcomplete-test "purge"))
+	   (setq pcomplete-help "(apt-get)Removing packages")
+	   (while (pcomplete-here
+		   (pcmpl-apt-get-installed-packages))))
+	  ((pcomplete-test "source")
+	   (setq pcomplete-help "(apt-get)Downloading sources")
+	   (while (pcomplete-here
+		   (pcmpl-apt-get-source-packages))))
+	  (t
+	   (while (pcomplete-here
+		   (pcmpl-apt-get-installable-packages)))))))
+
+(defun pcmpl-apt-get-commands ()
+  "Return a list of available APT-GET commands."
+  (pcomplete-uniqify-list
+   (list "update" "upgrade" "dselect-upgrade" "dist-upgrade" "install"
+     "remove" "purge" "source" "build-dep" "check" "download"
+     "clean" "autoclean" "autoremove" "changelog")))
+
+(defun pcmpl-apt-get-installed-packages ()
+  "Return a list of all packages installed through apt."
+  (pcmpl-apt-get-shell-command-to-list
+    (concat
+     "grep -A 1 \"Package: \" /var/lib/dpkg/status | "
+     "grep -B 1 -Ee "
+     "\"ok installed|half-installed|unpacked|half-configured|"
+     "config-files\" -Ee \"^Essential: yes\" | "
+     "grep \"Package: \" | cut -d\\  -f2")))
+
+(defun pcmpl-apt-get-source-packages ()
+  (append
+   (pcmpl-apt-get-shell-command-to-list
+     "apt-cache --no-generate pkgnames 2>/dev/null | head -n 2")
+   (pcmpl-apt-get-shell-command-to-list
+     (concat
+      "apt-cache dumpavail | "
+      "grep \"^Source: \" | sort -u | cut -f2 -d' ' | head -n 2"))))
+
+(defun pcmpl-apt-get-installable-packages ()
+  (pcmpl-apt-get-shell-command-to-list
+   "apt-cache --no-generate pkgnames 2>/dev/null"))
+
+(defun pcmpl-apt-get-options ()
+  "sqdyfmubVvh")
+
+(defun pcmpl-apt-get-shell-command-to-list (command)
+  (pcomplete-uniqify-list
+   (split-string (shell-command-to-string command))))
+
+;;;; man completion
+(defvar pcomplete-man-user-commands
+  (split-string
+   (shell-command-to-string
+    "apropos -s 1 .|while read -r a b; do echo \" $a\";done;"))
+  "p-completion candidates for `man' command")
+
+(defun pcomplete/man ()
+  "Completion rules for the `man' command."
+  (pcomplete-here pcomplete-man-user-commands))
+
+(add-hook 'eshell-mode-hook (lambda ()
+                              (setq   pcomplete-cycle-completions nil
+                                    eshell-cmpl-cycle-completions nil)))
+
 (defun eshell-or-new-session (&optional arg)
   "Create an interactive Eshell buffer.
 If there is already an Eshell session active, switch to it.
