@@ -666,7 +666,9 @@ mouse-3: Next buffer")
                         (propertize "%c" 'face       (if (and
                                                            (> (current-column) 80)
                                                            (not (string= (format-mode-line "%*") "%")))
-                                                         `(:background "red" :weight bold)
+                                                         ; :foreground "#F52749"
+                                                         ; :background "red"
+                                                         `(:foreground "#ff0000" :weight bold)
                                                        `(:background nil))
                                          'help-echo  "Line number and Column number\nmouse-1: Display Line and Column Mode Menu"
                                          'mouse-face 'mode-line-highlight
@@ -758,7 +760,9 @@ mouse-3: Next buffer")
                         (propertize "%c" 'face       (if (and
                                                            (> (current-column) 80)
                                                            (not (string= (format-mode-line "%*") "%")))
-                                                         `(:background "red" :weight bold)
+                                                         ; :foreground "#F52749"
+                                                         ; :background "red"
+                                                         `(:foreground "#ff0000" :weight bold)
                                                        `(:background nil))
                                          'help-echo  "Column number\nmouse-1: Display Line and Column Mode Menu"
                                          'mouse-face 'mode-line-highlight
