@@ -1794,4 +1794,7 @@ prefer for `sh-mode'.  It is automatically added to
  '(magit-diff-removed-highlight ((t (:background "#aa2222" :foreground "white"))))
  '(magit-hash ((t (:foreground "magenta"))))
  '(magit-section-highlight ((t (:background "black"))))
- '(web-mode-html-tag-bracket-face ((t (:foreground "brightwhite")))))
+ '(popup-face ((t (:inherit default :background "#090909" :foreground "lightgray" :weight bold))))
+ '(popup-menu-selection-face ((t (:inherit default :background "green" :foreground "black" :weight bold))))
+ '(popup-scroll-bar-background-face ((t (:background "#333333"))))
+ '(popup-scroll-bar-foreground-face ((t (:background "#111111")))))
