@@ -1,4 +1,4 @@
-alias la   ls -A $*
+alias la   ls -A    $*
 alias lsds ls -p1   $* | grep /
 alias lsde ls -Alh  $* | grep ^d
 alias lsd  ls -Ap1  $* | grep /
