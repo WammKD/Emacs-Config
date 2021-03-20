@@ -1177,17 +1177,22 @@ Leave point after open-paren."
                 ;;   (company-mode t)
                 ;;   (add-to-list 'company-backends 'company-ac-php-backend))
 
-                (setq web-mode-enable-auto-closing  t
-                      web-mode-enable-auto-pairing  t
-                      web-mode-style-padding        2
-                      web-mode-markup-indent-offset 2
-                      ;; web-mode-attr-indent-offset   2  ; Html attribute indentation level
-                      web-mode-script-padding       2
-                      web-mode-code-indent-offset   2
-                      web-mode-css-indent-offset    2
-                      ;; web-mode-sql-indent-offset    2  ; Sql (inside strings) indentation level
-                      tab-width                     2
-                      indent-tabs-mode              t)))))
+                (setq web-mode-enable-css-colorization t
+                      web-mode-enable-auto-closing     t
+                      web-mode-enable-auto-pairing     t
+                      web-mode-enable-auto-quoting     t
+                      web-mode-style-padding           2
+                      web-mode-markup-indent-offset    2
+                      ;; web-mode-attr-indent-offset      2  ; Html attribute indentation level
+                      web-mode-script-padding          2
+                      web-mode-code-indent-offset      2
+                      web-mode-css-indent-offset       2
+                      ;; web-mode-sql-indent-offset       2  ; Sql (inside strings) indentation level
+                      tab-width                        2
+                      indent-tabs-mode                 (not (string-prefix-p
+                                                              (expand-file-name
+                                                                "~/MEGA/gits/Swanye")
+                                                              buffer-file-name)))))))
 
   ;; Web Requests Shit
 (add-hook 'restclient-mode-hook (lambda ()
